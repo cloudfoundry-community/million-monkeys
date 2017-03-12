@@ -1,0 +1,15 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: cfcommunity/monkeys-ci
+
+inputs:
+  - name: monkeys
+  - name: stemcell
+  - name: director-state
+
+run:
+  path: monkeys/ci/tasks/upload-stemcell.sh
