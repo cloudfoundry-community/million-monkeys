@@ -19,3 +19,4 @@ tmp
 my*.yml
 releases/**/*.tgz
 credentials.yml
+.envrc

@@ -14,8 +14,9 @@ outputs:
 
 params:
   GITHUB_TOKEN:
-  VAULT_TARGET:
   VAULT_PREFIX:
+  VAULT_ADDR:
+  VAULT_SKIP_VERIFY: 1
 
 run:
   path: monkeys/ci/tasks/safe-get-bosh-creds.sh

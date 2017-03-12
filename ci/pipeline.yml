@@ -44,7 +44,8 @@ jobs:
     file: monkeys/ci/tasks/safe-get-bosh-creds.yml
     params:
       GITHUB_TOKEN: {{GITHUB_TOKEN}}
-      VAULT_TARGET: {{VAULT_TARGET}}
+      VAULT_ADDR: {{VAULT_ADDR}}
+      VAULT_SKIP_VERIFY: 1
       VAULT_PREFIX: {{VAULT_PREFIX}}
   - task: export-release
     file: monkeys/ci/tasks/export-release.yml
