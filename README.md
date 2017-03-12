@@ -14,18 +14,13 @@ Whenever a new stemcell is published, all community BOSH releases are deployed; 
 
 Create a file in `releases/`.
 
-If the release is on https://bosh.io/releases then your file will look like:
+If the release is on https://bosh.io/releases then simply run:
 
 ```yaml
----
-release:
-  release_label: stannis-boshrelease
-  release_org_name: cloudfoundry-community/stannis-boshrelease
+./ci/add-bosh-io-release.sh cloudfoundry-community/your-boshrelease
 ```
 
-The `release.release_label` is what appears as the CI job name.
-
-If the release is available as a `tgz` attachment to a GitHub release:
+If the release is available as a `tgz` attachment to a GitHub release, then create the following `releases/your-boshrelease.yml` file:
 
 ```yaml
 ---

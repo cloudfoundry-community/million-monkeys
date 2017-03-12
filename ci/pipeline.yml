@@ -52,6 +52,34 @@ jobs:
     task: export-release
   public: true
   serial: true
+- name: cf-release
+  plan:
+  - aggregate:
+    - get: monkeys
+    - get: ubuntu-trusty-stemcell
+      params:
+        tarball: false
+      passed:
+      - upload-stemcell
+      trigger: true
+    - get: cf-release
+      trigger: true
+  - file: monkeys/ci/tasks/director-creds.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      VAULT_ADDR: {{VAULT_ADDR}}
+      VAULT_PREFIX: {{VAULT_PREFIX}}
+      VAULT_SKIP_VERIFY: 1
+    task: director-creds
+  - file: monkeys/ci/tasks/export-release.yml
+    input_mapping:
+      release: cf-release
+      stemcell: ubuntu-trusty-stemcell
+    params:
+      BOSH_DEPLOYMENT: cf-release
+    task: export-release
+  public: true
+  serial: true
 - name: credhub-release
   plan:
   - aggregate:
@@ -159,6 +187,10 @@ resources:
 - name: bosh-release
   source:
     repository: cloudfoundry/bosh
+  type: bosh-io-release
+- name: cf-release
+  source:
+    repository: cloudfoundry/cf-release
   type: bosh-io-release
 - name: credhub-release
   source:
