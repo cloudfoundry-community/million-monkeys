@@ -17,6 +17,7 @@ outputs:
 
 params:
   BOSH_DEPLOYMENT:
+  BUCKET_URL:
 
 run:
   path: monkeys/ci/tasks/export-release.sh

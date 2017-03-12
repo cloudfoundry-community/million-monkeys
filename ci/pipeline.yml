@@ -49,10 +49,18 @@ jobs:
       stemcell: ubuntu-trusty-stemcell
     params:
       BOSH_DEPLOYMENT: bosh-release
+      BUCKET_URL: https://s3.amazonaws.com/million-monkeys-releases/
     task: export-release
-  - params:
-      file: compiled-release/*.tgz
-    put: compiled-release
+  - aggregate:
+    - params:
+        file: compiled-release/*.tgz
+      put: bosh-release-compiled-release
+    - params:
+        file: compiled-release/*-latest.spruce.yml
+      put: bosh-release-compiled-release-yml
+    - params:
+        file: compiled-release/*-latest.patch.yml
+      put: bosh-release-compiled-release-patch-yml
   serial: true
 - name: cf-release
   plan:
@@ -79,10 +87,18 @@ jobs:
       stemcell: ubuntu-trusty-stemcell
     params:
       BOSH_DEPLOYMENT: cf-release
+      BUCKET_URL: https://s3.amazonaws.com/million-monkeys-releases/
     task: export-release
-  - params:
-      file: compiled-release/*.tgz
-    put: compiled-release
+  - aggregate:
+    - params:
+        file: compiled-release/*.tgz
+      put: cf-release-compiled-release
+    - params:
+        file: compiled-release/*-latest.spruce.yml
+      put: cf-release-compiled-release-yml
+    - params:
+        file: compiled-release/*-latest.patch.yml
+      put: cf-release-compiled-release-patch-yml
   serial: true
 - name: credhub-release
   plan:
@@ -109,10 +125,18 @@ jobs:
       stemcell: ubuntu-trusty-stemcell
     params:
       BOSH_DEPLOYMENT: credhub-release
+      BUCKET_URL: https://s3.amazonaws.com/million-monkeys-releases/
     task: export-release
-  - params:
-      file: compiled-release/*.tgz
-    put: compiled-release
+  - aggregate:
+    - params:
+        file: compiled-release/*.tgz
+      put: credhub-release-compiled-release
+    - params:
+        file: compiled-release/*-latest.spruce.yml
+      put: credhub-release-compiled-release-yml
+    - params:
+        file: compiled-release/*-latest.patch.yml
+      put: credhub-release-compiled-release-patch-yml
   serial: true
 - name: stannis-boshrelease
   plan:
@@ -139,10 +163,18 @@ jobs:
       stemcell: ubuntu-trusty-stemcell
     params:
       BOSH_DEPLOYMENT: stannis-boshrelease
+      BUCKET_URL: https://s3.amazonaws.com/million-monkeys-releases/
     task: export-release
-  - params:
-      file: compiled-release/*.tgz
-    put: compiled-release
+  - aggregate:
+    - params:
+        file: compiled-release/*.tgz
+      put: stannis-boshrelease-compiled-release
+    - params:
+        file: compiled-release/*-latest.spruce.yml
+      put: stannis-boshrelease-compiled-release-yml
+    - params:
+        file: compiled-release/*-latest.patch.yml
+      put: stannis-boshrelease-compiled-release-patch-yml
   serial: true
 - name: uaa-release
   plan:
@@ -169,10 +201,18 @@ jobs:
       stemcell: ubuntu-trusty-stemcell
     params:
       BOSH_DEPLOYMENT: uaa-release
+      BUCKET_URL: https://s3.amazonaws.com/million-monkeys-releases/
     task: export-release
-  - params:
-      file: compiled-release/*.tgz
-    put: compiled-release
+  - aggregate:
+    - params:
+        file: compiled-release/*.tgz
+      put: uaa-release-compiled-release
+    - params:
+        file: compiled-release/*-latest.spruce.yml
+      put: uaa-release-compiled-release-yml
+    - params:
+        file: compiled-release/*-latest.patch.yml
+      put: uaa-release-compiled-release-patch-yml
   serial: true
 release:
   release_label: uaa-release
@@ -194,22 +234,64 @@ resources:
     repository: cfcommunity/monkeys-ci
     username: {{docker-hub-username}}
   type: docker-image
-- name: compiled-release
-  source:
-    access_key_id: {{cfcommunity-aws-access}}
-    bucket: million-monkeys-releases
-    regexp: '[\w\-\_]-[\d\.]+-ubuntu-trusty-[\d\.]+-[\d+]-[\d+]-[\d+]-(\d+).tgz'
-    region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
-  type: s3
 - name: bosh-release
   source:
     repository: cloudfoundry/bosh
   type: bosh-io-release
+- name: bosh-release-compiled-release
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases
+    regexp: bosh-release-([\d\.]+)-ubuntu-trusty[\d\.]+.tgz
+    regexpx: '[\w\-\_]-[\d\.]+-ubuntu-trusty-[\d\.]+-[\d+]-[\d+]-[\d+]-(\d+).tgz'
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+  type: s3
+- name: bosh-release-compiled-release-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: bosh-release-latest.spruce.yml
+  type: s3
+- name: bosh-release-compiled-release-patch-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: bosh-release-latest.patch.yml
+  type: s3
 - name: cf-release
   source:
     repository: cloudfoundry/cf-release
   type: bosh-io-release
+- name: cf-release-compiled-release
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases
+    regexp: cf-release-([\d\.]+)-ubuntu-trusty[\d\.]+.tgz
+    regexpx: '[\w\-\_]-[\d\.]+-ubuntu-trusty-[\d\.]+-[\d+]-[\d+]-[\d+]-(\d+).tgz'
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+  type: s3
+- name: cf-release-compiled-release-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: cf-release-latest.spruce.yml
+  type: s3
+- name: cf-release-compiled-release-patch-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: cf-release-latest.patch.yml
+  type: s3
 - name: credhub-release
   source:
     access_token: {{GITHUB_TOKEN}}
@@ -217,12 +299,87 @@ resources:
     repository: credhub-release
     user: pivotal-cf
   type: github-release
+- name: credhub-release-compiled-release
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases
+    regexp: credhub-release-([\d\.]+)-ubuntu-trusty[\d\.]+.tgz
+    regexpx: '[\w\-\_]-[\d\.]+-ubuntu-trusty-[\d\.]+-[\d+]-[\d+]-[\d+]-(\d+).tgz'
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+  type: s3
+- name: credhub-release-compiled-release-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: credhub-release-latest.spruce.yml
+  type: s3
+- name: credhub-release-compiled-release-patch-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: credhub-release-latest.patch.yml
+  type: s3
 - name: stannis-boshrelease
   source:
     repository: cloudfoundry-community/stannis-boshrelease
   type: bosh-io-release
+- name: stannis-boshrelease-compiled-release
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases
+    regexp: stannis-boshrelease-([\d\.]+)-ubuntu-trusty[\d\.]+.tgz
+    regexpx: '[\w\-\_]-[\d\.]+-ubuntu-trusty-[\d\.]+-[\d+]-[\d+]-[\d+]-(\d+).tgz'
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+  type: s3
+- name: stannis-boshrelease-compiled-release-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: stannis-boshrelease-latest.spruce.yml
+  type: s3
+- name: stannis-boshrelease-compiled-release-patch-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: stannis-boshrelease-latest.patch.yml
+  type: s3
 - name: uaa-release
   source:
     repository: cloudfoundry/uaa-release
   type: bosh-io-release
+- name: uaa-release-compiled-release
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases
+    regexp: uaa-release-([\d\.]+)-ubuntu-trusty[\d\.]+.tgz
+    regexpx: '[\w\-\_]-[\d\.]+-ubuntu-trusty-[\d\.]+-[\d+]-[\d+]-[\d+]-(\d+).tgz'
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+  type: s3
+- name: uaa-release-compiled-release-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: uaa-release-latest.spruce.yml
+  type: s3
+- name: uaa-release-compiled-release-patch-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: uaa-release-latest.patch.yml
+  type: s3
 

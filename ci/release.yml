@@ -4,6 +4,36 @@ resources:
   source:
     repository: (( grab release.release_org_name ))
 
+- name: (( concat release.release_label "-compiled-release" ))
+  type: s3
+  source:
+    bucket: million-monkeys-releases
+    access_key_id: {{cfcommunity-aws-access}}
+    secret_access_key: {{cfcommunity-aws-secret}}
+    region_name: us-east-1
+    # e.g stannis-12.0-ubuntu-trusty-3363.12-20170312-150301-020284203-20170312150310.tgz
+    regexpx: "[\\w\\-\\_]-[\\d\\.]+-ubuntu-trusty-[\\d\\.]+-[\\d+]-[\\d+]-[\\d+]-(\\d+).tgz"
+    regexp: (( concat release.release_label "-([\\d\\.]+)-ubuntu-trusty[\\d\\.]+.tgz" ))
+
+- name: (( concat release.release_label "-compiled-release-yml" ))
+  type: s3
+  source:
+    bucket: million-monkeys-releases-latest
+    access_key_id: {{cfcommunity-aws-access}}
+    secret_access_key: {{cfcommunity-aws-secret}}
+    region_name: us-east-1
+    versioned_file: (( concat release.release_label "-latest.spruce.yml" ))
+
+- name: (( concat release.release_label "-compiled-release-patch-yml" ))
+  type: s3
+  source:
+    bucket: million-monkeys-releases-latest
+    access_key_id: {{cfcommunity-aws-access}}
+    secret_access_key: {{cfcommunity-aws-secret}}
+    region_name: us-east-1
+    versioned_file: (( concat release.release_label "-latest.patch.yml" ))
+
+
 jobs:
 - name: (( grab release.release_label ))
   serial: true
@@ -30,6 +60,14 @@ jobs:
       release: (( grab release.release_label ))
     params:
       BOSH_DEPLOYMENT: (( grab release.release_label ))
-  - put: compiled-release
-    params:
-      file: compiled-release/*.tgz
+      BUCKET_URL: https://s3.amazonaws.com/million-monkeys-releases/
+  - aggregate:
+    - put: (( concat release.release_label "-compiled-release" ))
+      params:
+        file: compiled-release/*.tgz
+    - put: (( concat release.release_label "-compiled-release-yml" ))
+      params:
+        file: compiled-release/*-latest.spruce.yml
+    - put: (( concat release.release_label "-compiled-release-patch-yml" ))
+      params:
+        file: compiled-release/*-latest.patch.yml
