@@ -158,8 +158,10 @@ resources:
   type: bosh-io-release
 - name: credhub-release
   source:
-    repository: pivotal-cf/credhub-release
-  type: bosh-io-release
+    access_token: {{GITHUB_TOKEN}}
+    repository: credhub-release
+    user: pivotal-cf
+  type: github-release
 - name: stannis-boshrelease
   source:
     repository: cloudfoundry-community/stannis-boshrelease
