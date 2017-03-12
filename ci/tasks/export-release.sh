@@ -2,11 +2,11 @@
 
 set -eux
 
-export BOSH_ENVIRONMENT=`bosh-cli int director-state/director-creds.yml --path /internal_ip`
-export BOSH_CA_CERT="$(bosh-cli int director-state/director-creds.yml --path /director_ssl/ca)"
-export BOSH_CLIENT=admin
-export BOSH_CLIENT_SECRET=`bosh-cli int director-state/director-creds.yml --path /admin_password`
-export BOSH_DEPLOYMENT=compilation
+export BOSH_ENVIRONMENT=${BOSH_ENVIRONMENT:?required}
+export BOSH_CA_CERT=${BOSH_CA_CERT:?required}
+export BOSH_CLIENT=${BOSH_CLIENT:?required}
+export BOSH_CLIENT_SECRET=${BOSH_CLIENT_SECRET:?required}
+export BOSH_DEPLOYMENT=${BOSH_DEPLOYMENT:?required}
 
 #
 # stemcell metadata/upload

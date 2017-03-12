@@ -1,14 +1,21 @@
 ---
+resources:
+- name: monkeys
+  type: git
+  source:
+    uri: https://github.com/cloudfoundry-community/million-monkeys.git
+
 jobs:
 - name: stannis-boshrelease
   public: true
   serial: true
   plan:
-  - aggregate:
-    - get: monkeys-ci
-
-resources:
-- name: monkeys-ci
-  type: git
-  source:
-    uri: https://github.com/cloudfoundry-community/million-monkeys.git
+  - get: monkeys
+  - task: export-release
+    file: monkeys/ci/tasks/export-release.yml
+    params:
+      BOSH_DEPLOYMENT: stannis-compilation
+      BOSH_ENVIRONMENT: {{BOSH_ENVIRONMENT}}
+      BOSH_CA_CERT: {{BOSH_CA_CERT}}
+      BOSH_CLIENT: {{BOSH_CLIENT}}
+      BOSH_CLIENT_SECRET: {{BOSH_CLIENT_SECRET}}

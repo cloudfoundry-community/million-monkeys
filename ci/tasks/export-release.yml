@@ -7,7 +7,7 @@ image_resource:
     repository: bosh/compiled-release
 
 inputs:
-  - name: bosh-src
+  - name: monkeys
   - name: director-state
   - name: stemcell
   - name: release
@@ -15,5 +15,12 @@ inputs:
 outputs:
   - name: compiled-release
 
+params:
+  BOSH_ENVIRONMENT:
+  BOSH_CA_CERT:
+  BOSH_CLIENT: admin
+  BOSH_CLIENT_SECRET:
+  BOSH_DEPLOYMENT:
+
 run:
-  path: monkeys-ci/ci/pipelines/compiled-releases/tasks/export-release.sh
+  path: monkeys/ci/tasks/export-release.sh
