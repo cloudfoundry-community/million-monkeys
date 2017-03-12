@@ -16,10 +16,6 @@ outputs:
   - name: compiled-release
 
 params:
-  BOSH_ENVIRONMENT:
-  BOSH_CA_CERT:
-  BOSH_CLIENT: admin
-  BOSH_CLIENT_SECRET:
   BOSH_DEPLOYMENT:
 
 run:

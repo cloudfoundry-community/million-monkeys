@@ -53,10 +53,6 @@ jobs:
       release: stannis-boshrelease
     params:
       BOSH_DEPLOYMENT: stannis-compilation
-      BOSH_ENVIRONMENT: {{BOSH_ENVIRONMENT}}
-      BOSH_CA_CERT: {{BOSH_CA_CERT}}
-      BOSH_CLIENT: {{BOSH_CLIENT}}
-      BOSH_CLIENT_SECRET: {{BOSH_CLIENT_SECRET}}
 
 - name: build-task-image
   serial: true
