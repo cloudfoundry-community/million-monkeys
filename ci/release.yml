@@ -30,3 +30,6 @@ jobs:
       release: (( grab release.release_label ))
     params:
       BOSH_DEPLOYMENT: (( grab release.release_label ))
+  - put: compiled-release
+    params:
+      file: compiled-release/*.tgz

@@ -54,6 +54,8 @@ bosh-cli -d $BOSH_DEPLOYMENT export-release $RELEASE_NAME/$RELEASE_VERSION $STEM
 mv *.tgz compiled-release/$( echo *.tgz | sed "s/\.tgz$/-$( date -u +%Y%m%d%H%M%S ).tgz/" )
 sha1sum compiled-release/*.tgz
 
+sha1=$(sha1sum compiled-release/*.tgz | awk '{print $1}')
+
 #
 # cleanup
 #

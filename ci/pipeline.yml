@@ -15,7 +15,7 @@ jobs:
     input_mapping:
       stemcell: ubuntu-trusty-stemcell
     task: upload-stemcell
-  public: true
+  public: false
   serial: true
 - name: build-task-image
   plan:
@@ -50,6 +50,9 @@ jobs:
     params:
       BOSH_DEPLOYMENT: bosh-release
     task: export-release
+  - params:
+      file: compiled-release/*.tgz
+    put: compiled-release
   serial: true
 - name: cf-release
   plan:
@@ -77,6 +80,9 @@ jobs:
     params:
       BOSH_DEPLOYMENT: cf-release
     task: export-release
+  - params:
+      file: compiled-release/*.tgz
+    put: compiled-release
   serial: true
 - name: credhub-release
   plan:
@@ -104,6 +110,9 @@ jobs:
     params:
       BOSH_DEPLOYMENT: credhub-release
     task: export-release
+  - params:
+      file: compiled-release/*.tgz
+    put: compiled-release
   serial: true
 - name: stannis-boshrelease
   plan:
@@ -131,6 +140,9 @@ jobs:
     params:
       BOSH_DEPLOYMENT: stannis-boshrelease
     task: export-release
+  - params:
+      file: compiled-release/*.tgz
+    put: compiled-release
   serial: true
 - name: uaa-release
   plan:
@@ -158,6 +170,9 @@ jobs:
     params:
       BOSH_DEPLOYMENT: uaa-release
     task: export-release
+  - params:
+      file: compiled-release/*.tgz
+    put: compiled-release
   serial: true
 release:
   release_label: uaa-release
@@ -179,6 +194,14 @@ resources:
     repository: cfcommunity/monkeys-ci
     username: {{docker-hub-username}}
   type: docker-image
+- name: compiled-release
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases
+    regexp: '[\w\-\_]-[\d\.]+-ubuntu-trusty-[\d\.]+-[\d+]-[\d+]-[\d+]-(\d+).tgz'
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+  type: s3
 - name: bosh-release
   source:
     repository: cloudfoundry/bosh

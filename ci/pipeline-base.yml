@@ -19,6 +19,16 @@ resources:
     password: {{docker-hub-password}}
     repository: cfcommunity/monkeys-ci
 
+- name: compiled-release
+  type: s3
+  source:
+    bucket: million-monkeys-releases
+    access_key_id: {{cfcommunity-aws-access}}
+    secret_access_key: {{cfcommunity-aws-secret}}
+    region_name: us-east-1
+    # e.g stannis-12.0-ubuntu-trusty-3363.12-20170312-150301-020284203-20170312150310.tgz
+    regexp: "[\\w\\-\\_]-[\\d\\.]+-ubuntu-trusty-[\\d\\.]+-[\\d+]-[\\d+]-[\\d+]-(\\d+).tgz"
+
 jobs:
 - name: upload-stemcell
   public: false
