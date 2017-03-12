@@ -59,7 +59,9 @@ mv *.tgz compiled-release/$RELEASE_ORG_NAME-$RELEASE_VERSION-$STEMCELL_OS-$STEMC
 sha1sum compiled-release/$RELEASE_ORG_NAME*.tgz
 
 RELEASE_SHA1=$(sha1sum compiled-release/$RELEASE_ORG_NAME*.tgz | awk '{print $1}')
-RELEASE_FILENAME=$(basename compiled-release/$RELEASE_ORG_NAME*.tgz)
+cd compiled-release/
+RELEASE_FILENAME=$(ls $RELEASE_ORG_NAME*.tgz)
+cd -
 
 cat > compiled-release/$RELEASE_ORG_NAME-latest.spruce.yml <<YAML
 ---
