@@ -16,14 +16,14 @@ A sample use case for `bosh-cli create-env` or `bosh-cli int`:
 
 ```
 bosh-cli int bosh.yml \
-  -o <(curl https://s3.amazonaws.com/million-monkeys-releases-latest/bosh-latest.patch.yml)
+  -o <(curl -s https://s3.amazonaws.com/million-monkeys-releases-latest/cloudfoundry/bosh-latest.patch.yml)
 ```
 
 Another is with `spruce merge`:
 
 ```
 spruce merge bosh.yml
-  <(curl https://s3.amazonaws.com/million-monkeys-releases-latest/bosh-latest.spruce.yml)
+  <(curl -s https://s3.amazonaws.com/million-monkeys-releases-latest/cloudfoundry/bosh-latest.spruce.yml)
 ```
 
 Note the slight differences in the suffix above: `.spruce.yml` vs `.patch.yml`.
