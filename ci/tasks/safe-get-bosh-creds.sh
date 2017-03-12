@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 safe -k target ci ${VAULT_TARGET:?required}
 echo ${GITHUB_TOKEN:?required} | safe auth github
