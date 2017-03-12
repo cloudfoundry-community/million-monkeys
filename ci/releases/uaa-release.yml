@@ -1,0 +1,4 @@
+---
+release:
+  release_label: uaa-release
+  release_org_name: cloudfoundry/uaa-release

@@ -1,28 +1,4 @@
-resources:
-- name: stannis-boshrelease
-  type: bosh-io-release
-  source:
-    repository: cloudfoundry-community/stannis-boshrelease
-
-- name: stannis-boshrelease
-  public: true
-  serial: true
-  plan:
-  - aggregate:
-    - get: monkeys
-    - get: ubuntu-trusty-stemcell
-      params: {tarball: false}
-    - get: stannis-boshrelease
-  - task: safe-get-bosh-creds
-    file: monkeys/ci/tasks/safe-get-bosh-creds.yml
-    params:
-      GITHUB_TOKEN: {{GITHUB_TOKEN}}
-      VAULT_TARGET: {{VAULT_TARGET}}
-      VAULT_PREFIX: {{VAULT_PREFIX}}
-  - task: export-release
-    file: monkeys/ci/tasks/export-release.yml
-    input_mapping:
-      stemcell: ubuntu-trusty-stemcell
-      release: stannis-boshrelease
-    params:
-      BOSH_DEPLOYMENT: stannis-compilation
+---
+release:
+  release_label: stannis-boshrelease
+  release_org_name: cloudfoundry-community/stannis-boshrelease

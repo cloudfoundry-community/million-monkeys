@@ -11,11 +11,6 @@ resources:
     name: bosh-vsphere-esxi-ubuntu-trusty-go_agent
     version_family: latest
 
-- name: stannis-boshrelease
-  type: bosh-io-release
-  source:
-    repository: cloudfoundry-community/stannis-boshrelease
-
 - name: ci-image
   type: docker-image
   source:
@@ -43,32 +38,6 @@ jobs:
     file: monkeys/ci/tasks/upload-stemcell.yml
     input_mapping:
       stemcell: ubuntu-trusty-stemcell
-
-- name: stannis-boshrelease
-  public: true
-  serial: true
-  plan:
-  - aggregate:
-    - get: monkeys
-    - get: ubuntu-trusty-stemcell
-      params: {tarball: false}
-      passed: [upload-stemcell]
-      trigger: true
-    - get: stannis-boshrelease
-  - task: director-creds
-    file: monkeys/ci/tasks/director-creds.yml
-    params:
-      GITHUB_TOKEN: {{GITHUB_TOKEN}}
-      VAULT_ADDR: {{VAULT_ADDR}}
-      VAULT_SKIP_VERIFY: 1
-      VAULT_PREFIX: {{VAULT_PREFIX}}
-  - task: export-release
-    file: monkeys/ci/tasks/export-release.yml
-    input_mapping:
-      stemcell: ubuntu-trusty-stemcell
-      release: stannis-boshrelease
-    params:
-      BOSH_DEPLOYMENT: stannis-compilation
 
 - name: build-task-image
   serial: true

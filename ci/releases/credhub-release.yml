@@ -1,0 +1,4 @@
+---
+release:
+  release_label: credhub-release
+  release_org_name: pivotal-cf/credhub-release

@@ -1,0 +1,32 @@
+resources:
+- name: (( grab release.release_label ))
+  type: bosh-io-release
+  source:
+    repository: (( grab release.release_org_name ))
+
+jobs:
+- name: (( grab release.release_label ))
+  public: true
+  serial: true
+  plan:
+  - aggregate:
+    - get: monkeys
+    - get: ubuntu-trusty-stemcell
+      params: {tarball: false}
+      passed: [upload-stemcell]
+      trigger: true
+    - get: (( grab release.release_label ))
+  - task: director-creds
+    file: monkeys/ci/tasks/director-creds.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      VAULT_ADDR: {{VAULT_ADDR}}
+      VAULT_SKIP_VERIFY: 1
+      VAULT_PREFIX: {{VAULT_PREFIX}}
+  - task: export-release
+    file: monkeys/ci/tasks/export-release.yml
+    input_mapping:
+      stemcell: ubuntu-trusty-stemcell
+      release: (( grab release.release_label ))
+    params:
+      BOSH_DEPLOYMENT: (( grab release.release_label ))
