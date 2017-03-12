@@ -32,8 +32,8 @@ jobs:
   - aggregate:
     - get: monkeys
     - get: ubuntu-trusty-stemcell
-  - task: safe-get-bosh-creds
-    file: monkeys/ci/tasks/safe-get-bosh-creds.yml
+  - task: director-creds
+    file: monkeys/ci/tasks/director-creds.yml
     params:
       GITHUB_TOKEN: {{GITHUB_TOKEN}}
       VAULT_ADDR: {{VAULT_ADDR}}
@@ -54,8 +54,8 @@ jobs:
       params: {tarball: false}
       passed: [upload-stemcell]
     - get: stannis-boshrelease
-  - task: safe-get-bosh-creds
-    file: monkeys/ci/tasks/safe-get-bosh-creds.yml
+  - task: director-creds
+    file: monkeys/ci/tasks/director-creds.yml
     params:
       GITHUB_TOKEN: {{GITHUB_TOKEN}}
       VAULT_ADDR: {{VAULT_ADDR}}

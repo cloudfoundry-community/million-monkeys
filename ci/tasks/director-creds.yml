@@ -19,4 +19,4 @@ params:
   VAULT_SKIP_VERIFY: 1
 
 run:
-  path: monkeys/ci/tasks/safe-get-bosh-creds.sh
+  path: monkeys/ci/tasks/director-creds.sh
