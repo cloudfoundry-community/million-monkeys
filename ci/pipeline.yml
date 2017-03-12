@@ -40,6 +40,12 @@ jobs:
     - get: ubuntu-trusty-stemcell
       params: {tarball: false}
     - get: stannis-boshrelease
+  - task: safe-get-bosh-creds
+    file: monkeys/ci/tasks/safe-get-bosh-creds.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      VAULT_TARGET: {{VAULT_TARGET}}
+      VAULT_PREFIX: {{VAULT_PREFIX}}
   - task: export-release
     file: monkeys/ci/tasks/export-release.yml
     input_mapping:

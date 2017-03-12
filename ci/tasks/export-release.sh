@@ -2,11 +2,12 @@
 
 set -eux
 
-export BOSH_ENVIRONMENT=${BOSH_ENVIRONMENT:?required}
-export BOSH_CA_CERT=${BOSH_CA_CERT:?required}
-export BOSH_CLIENT=${BOSH_CLIENT:?required}
-export BOSH_CLIENT_SECRET=${BOSH_CLIENT_SECRET:?required}
-export BOSH_DEPLOYMENT=${BOSH_DEPLOYMENT:?required}
+source director_creds/env
+: ${BOSH_ENVIRONMENT:?required}
+: ${BOSH_CA_CERT:?required}
+: ${BOSH_CLIENT:?required}
+: ${BOSH_CLIENT_SECRET:?required}
+: ${BOSH_DEPLOYMENT:?required}
 
 STEMCELL_OS=${STEMCELL_OS:-ubuntu-trusty}
 STEMCELL_VERSION=$(cat stemcell/version)
