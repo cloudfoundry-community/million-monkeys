@@ -163,6 +163,7 @@ resources:
 - name: credhub-release
   source:
     access_token: {{GITHUB_TOKEN}}
+    pre_release: true
     repository: credhub-release
     user: pivotal-cf
   type: github-release

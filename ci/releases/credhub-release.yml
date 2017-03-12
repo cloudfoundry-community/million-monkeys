@@ -10,3 +10,4 @@ resources:
     user: pivotal-cf
     repository: (( grab release.release_label ))
     access_token: {{GITHUB_TOKEN}}
+    pre_release: true
