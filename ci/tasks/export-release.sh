@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -eux
+set -eu
 
 : ${BOSH_DEPLOYMENT:?required}
 
@@ -8,6 +8,8 @@ export BOSH_ENVIRONMENT=`bosh-cli int director-state/director-creds.yml --path /
 export BOSH_CA_CERT="$(bosh-cli int director-state/director-creds.yml --path /director_ssl/ca)"
 export BOSH_CLIENT=admin
 export BOSH_CLIENT_SECRET=`bosh-cli int director-state/director-creds.yml --path /admin_password`
+
+set -x
 
 STEMCELL_OS=${STEMCELL_OS:-ubuntu-trusty}
 STEMCELL_VERSION=$(cat stemcell/version)
