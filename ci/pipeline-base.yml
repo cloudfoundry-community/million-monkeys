@@ -1,0 +1,48 @@
+---
+resources:
+- name: monkeys
+  type: git
+  source:
+    uri: https://github.com/cloudfoundry-community/million-monkeys.git
+
+- name: ubuntu-trusty-stemcell
+  type: bosh-io-stemcell
+  source:
+    name: bosh-vsphere-esxi-ubuntu-trusty-go_agent
+    version_family: latest
+
+- name: ci-image
+  type: docker-image
+  source:
+    email: {{docker-hub-email}}
+    username: {{docker-hub-username}}
+    password: {{docker-hub-password}}
+    repository: cfcommunity/monkeys-ci
+
+jobs:
+- name: upload-stemcell
+  public: true
+  serial: true
+  plan:
+  - aggregate:
+    - get: monkeys
+    - get: ubuntu-trusty-stemcell
+  - task: director-creds
+    file: monkeys/ci/tasks/director-creds.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      VAULT_ADDR: {{VAULT_ADDR}}
+      VAULT_SKIP_VERIFY: 1
+      VAULT_PREFIX: {{VAULT_PREFIX}}
+  - task: upload-stemcell
+    file: monkeys/ci/tasks/upload-stemcell.yml
+    input_mapping:
+      stemcell: ubuntu-trusty-stemcell
+
+- name: build-task-image
+  serial: true
+  plan:
+  - get: monkeys
+  - put: ci-image
+    params:
+      build: monkeys/ci/image

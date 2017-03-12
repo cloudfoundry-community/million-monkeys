@@ -1,48 +1,178 @@
----
-resources:
-- name: monkeys
-  type: git
-  source:
-    uri: https://github.com/cloudfoundry-community/million-monkeys.git
-
-- name: ubuntu-trusty-stemcell
-  type: bosh-io-stemcell
-  source:
-    name: bosh-vsphere-esxi-ubuntu-trusty-go_agent
-    version_family: latest
-
-- name: ci-image
-  type: docker-image
-  source:
-    email: {{docker-hub-email}}
-    username: {{docker-hub-username}}
-    password: {{docker-hub-password}}
-    repository: cfcommunity/monkeys-ci
-
 jobs:
 - name: upload-stemcell
-  public: true
-  serial: true
   plan:
   - aggregate:
     - get: monkeys
     - get: ubuntu-trusty-stemcell
-  - task: director-creds
-    file: monkeys/ci/tasks/director-creds.yml
+  - file: monkeys/ci/tasks/director-creds.yml
     params:
       GITHUB_TOKEN: {{GITHUB_TOKEN}}
       VAULT_ADDR: {{VAULT_ADDR}}
-      VAULT_SKIP_VERIFY: 1
       VAULT_PREFIX: {{VAULT_PREFIX}}
-  - task: upload-stemcell
-    file: monkeys/ci/tasks/upload-stemcell.yml
+      VAULT_SKIP_VERIFY: 1
+    task: director-creds
+  - file: monkeys/ci/tasks/upload-stemcell.yml
     input_mapping:
       stemcell: ubuntu-trusty-stemcell
-
-- name: build-task-image
+    task: upload-stemcell
+  public: true
   serial: true
+- name: build-task-image
   plan:
   - get: monkeys
-  - put: ci-image
-    params:
+  - params:
       build: monkeys/ci/image
+    put: ci-image
+  serial: true
+- name: bosh-release
+  plan:
+  - aggregate:
+    - get: monkeys
+    - get: ubuntu-trusty-stemcell
+      params:
+        tarball: false
+      passed:
+      - upload-stemcell
+      trigger: true
+    - get: bosh-release
+      trigger: true
+  - file: monkeys/ci/tasks/director-creds.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      VAULT_ADDR: {{VAULT_ADDR}}
+      VAULT_PREFIX: {{VAULT_PREFIX}}
+      VAULT_SKIP_VERIFY: 1
+    task: director-creds
+  - file: monkeys/ci/tasks/export-release.yml
+    input_mapping:
+      release: bosh-release
+      stemcell: ubuntu-trusty-stemcell
+    params:
+      BOSH_DEPLOYMENT: bosh-release
+    task: export-release
+  public: true
+  serial: true
+- name: credhub-release
+  plan:
+  - aggregate:
+    - get: monkeys
+    - get: ubuntu-trusty-stemcell
+      params:
+        tarball: false
+      passed:
+      - upload-stemcell
+      trigger: true
+    - get: credhub-release
+      trigger: true
+  - file: monkeys/ci/tasks/director-creds.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      VAULT_ADDR: {{VAULT_ADDR}}
+      VAULT_PREFIX: {{VAULT_PREFIX}}
+      VAULT_SKIP_VERIFY: 1
+    task: director-creds
+  - file: monkeys/ci/tasks/export-release.yml
+    input_mapping:
+      release: credhub-release
+      stemcell: ubuntu-trusty-stemcell
+    params:
+      BOSH_DEPLOYMENT: credhub-release
+    task: export-release
+  public: true
+  serial: true
+- name: stannis-boshrelease
+  plan:
+  - aggregate:
+    - get: monkeys
+    - get: ubuntu-trusty-stemcell
+      params:
+        tarball: false
+      passed:
+      - upload-stemcell
+      trigger: true
+    - get: stannis-boshrelease
+      trigger: true
+  - file: monkeys/ci/tasks/director-creds.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      VAULT_ADDR: {{VAULT_ADDR}}
+      VAULT_PREFIX: {{VAULT_PREFIX}}
+      VAULT_SKIP_VERIFY: 1
+    task: director-creds
+  - file: monkeys/ci/tasks/export-release.yml
+    input_mapping:
+      release: stannis-boshrelease
+      stemcell: ubuntu-trusty-stemcell
+    params:
+      BOSH_DEPLOYMENT: stannis-boshrelease
+    task: export-release
+  public: true
+  serial: true
+- name: uaa-release
+  plan:
+  - aggregate:
+    - get: monkeys
+    - get: ubuntu-trusty-stemcell
+      params:
+        tarball: false
+      passed:
+      - upload-stemcell
+      trigger: true
+    - get: uaa-release
+      trigger: true
+  - file: monkeys/ci/tasks/director-creds.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      VAULT_ADDR: {{VAULT_ADDR}}
+      VAULT_PREFIX: {{VAULT_PREFIX}}
+      VAULT_SKIP_VERIFY: 1
+    task: director-creds
+  - file: monkeys/ci/tasks/export-release.yml
+    input_mapping:
+      release: uaa-release
+      stemcell: ubuntu-trusty-stemcell
+    params:
+      BOSH_DEPLOYMENT: uaa-release
+    task: export-release
+  public: true
+  serial: true
+release:
+  release_label: uaa-release
+  release_org_name: cloudfoundry/uaa-release
+resources:
+- name: monkeys
+  source:
+    uri: https://github.com/cloudfoundry-community/million-monkeys.git
+  type: git
+- name: ubuntu-trusty-stemcell
+  source:
+    name: bosh-vsphere-esxi-ubuntu-trusty-go_agent
+    version_family: latest
+  type: bosh-io-stemcell
+- name: ci-image
+  source:
+    email: {{docker-hub-email}}
+    password: {{docker-hub-password}}
+    repository: cfcommunity/monkeys-ci
+    username: {{docker-hub-username}}
+  type: docker-image
+- name: bosh-release
+  source:
+    repository: cloudfoundry/bosh
+  type: bosh-io-release
+- name: credhub-release
+  source:
+    access_token: {{GITHUB_TOKEN}}
+    pre_release: true
+    repository: credhub-release
+    user: pivotal-cf
+  type: github-release
+- name: stannis-boshrelease
+  source:
+    repository: cloudfoundry-community/stannis-boshrelease
+  type: bosh-io-release
+- name: uaa-release
+  source:
+    repository: cloudfoundry/uaa-release
+  type: bosh-io-release
+
