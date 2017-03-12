@@ -8,15 +8,8 @@ export BOSH_CLIENT=${BOSH_CLIENT:?required}
 export BOSH_CLIENT_SECRET=${BOSH_CLIENT_SECRET:?required}
 export BOSH_DEPLOYMENT=${BOSH_DEPLOYMENT:?required}
 
-#
-# stemcell metadata/upload
-#
-
-tar -xzf stemcell/*.tgz $( tar -tzf stemcell/*.tgz | grep 'stemcell.MF' )
-STEMCELL_OS=$( grep -E '^operating_system: ' stemcell.MF | awk '{print $2}' | tr -d "\"'" )
-STEMCELL_VERSION=$( grep -E '^version: ' stemcell.MF | awk '{print $2}' | tr -d "\"'" )
-
-bosh-cli -n upload-stemcell stemcell/*.tgz
+STEMCELL_OS=${STEMCELL_OS:-ubuntu-trusty}
+STEMCELL_VERSION=$(cat stemcell/version)
 
 #
 # release metadata/upload

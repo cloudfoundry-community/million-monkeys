@@ -17,6 +17,12 @@ resources:
     repository: cloudfoundry-community/stannis-boshrelease
 
 jobs:
+- name: upload-stemcell
+  public: true
+  serial: true
+  plan:
+  - get: ubuntu-trusty-stemcell
+
 - name: stannis-boshrelease
   public: true
   serial: true
@@ -24,6 +30,7 @@ jobs:
   - aggregate:
     - get: monkeys
     - get: ubuntu-trusty-stemcell
+      params: {tarball: false}
     - get: stannis-boshrelease
   - task: export-release
     file: monkeys/ci/tasks/export-release.yml
