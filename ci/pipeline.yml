@@ -1,0 +1,14 @@
+---
+jobs:
+- name: stannis-boshrelease
+  public: true
+  serial: true
+  plan:
+  - aggregate:
+    - get: monkeys-ci
+
+resources:
+- name: monkeys-ci
+  type: git
+  source:
+    uri: https://github.com/cloudfoundry-community/million-monkeys.git
