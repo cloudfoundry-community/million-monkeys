@@ -89,3 +89,6 @@ cp compiled-release/$RELEASE_ORG_NAME-{latest,$RELEASE_VERSION}.patch.yml
 #
 
 bosh-cli -n -d $BOSH_DEPLOYMENT delete-deployment
+
+# curl -k https://genesis.starkandwayne.com/v1/stemcell/latest | jq .
+# curl -k https://genesis.starkandwayne.com/v1/stemcell/latest | jq -r ". |= {\"stemcells\": .}" | spruce merge -
