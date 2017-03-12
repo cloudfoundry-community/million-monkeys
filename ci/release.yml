@@ -11,9 +11,8 @@ resources:
     access_key_id: {{cfcommunity-aws-access}}
     secret_access_key: {{cfcommunity-aws-secret}}
     region_name: us-east-1
-    # e.g stannis-12.0-ubuntu-trusty-3363.12-20170312-150301-020284203-20170312150310.tgz
-    regexpx: "[\\w\\-\\_]-[\\d\\.]+-ubuntu-trusty-[\\d\\.]+-[\\d+]-[\\d+]-[\\d+]-(\\d+).tgz"
-    regexp: (( concat release.release_label "-([\\d\\.]+)-ubuntu-trusty[\\d\\.]+.tgz" ))
+    # e.g stannis-12.0-ubuntu-trusty-3363.12.tgz
+    regexp: (( concat release.release_label "-\([\\d\\.]+\)-ubuntu-trusty-[\\d\\.]+.tgz" ))
 
 - name: (( concat release.release_label "-compiled-release-yml" ))
   type: s3
@@ -60,14 +59,17 @@ jobs:
       release: (( grab release.release_label ))
     params:
       BOSH_DEPLOYMENT: (( grab release.release_label ))
-      BUCKET_URL: https://s3.amazonaws.com/million-monkeys-releases/
+      BUCKET_URL: https://s3.amazonaws.com/million-monkeys-releases
   - aggregate:
     - put: (( concat release.release_label "-compiled-release" ))
       params:
         file: compiled-release/*.tgz
+        acl: public-read
     - put: (( concat release.release_label "-compiled-release-yml" ))
       params:
         file: compiled-release/*-latest.spruce.yml
+        acl: public-read
     - put: (( concat release.release_label "-compiled-release-patch-yml" ))
       params:
         file: compiled-release/*-latest.patch.yml
+        acl: public-read
