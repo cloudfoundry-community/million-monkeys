@@ -16,6 +16,7 @@ jobs:
       passed: [upload-stemcell]
       trigger: true
     - get: (( grab release.release_label ))
+      trigger: true
   - task: director-creds
     file: monkeys/ci/tasks/director-creds.yml
     params:

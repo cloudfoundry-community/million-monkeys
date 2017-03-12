@@ -35,6 +35,7 @@ jobs:
       - upload-stemcell
       trigger: true
     - get: bosh-release
+      trigger: true
   - file: monkeys/ci/tasks/director-creds.yml
     params:
       GITHUB_TOKEN: {{GITHUB_TOKEN}}
@@ -62,6 +63,7 @@ jobs:
       - upload-stemcell
       trigger: true
     - get: credhub-release
+      trigger: true
   - file: monkeys/ci/tasks/director-creds.yml
     params:
       GITHUB_TOKEN: {{GITHUB_TOKEN}}
@@ -89,6 +91,7 @@ jobs:
       - upload-stemcell
       trigger: true
     - get: stannis-boshrelease
+      trigger: true
   - file: monkeys/ci/tasks/director-creds.yml
     params:
       GITHUB_TOKEN: {{GITHUB_TOKEN}}
@@ -116,6 +119,7 @@ jobs:
       - upload-stemcell
       trigger: true
     - get: uaa-release
+      trigger: true
   - file: monkeys/ci/tasks/director-creds.yml
     params:
       GITHUB_TOKEN: {{GITHUB_TOKEN}}
