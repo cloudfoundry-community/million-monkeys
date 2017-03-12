@@ -2,12 +2,12 @@
 
 set -eux
 
-source director_creds/env
-: ${BOSH_ENVIRONMENT:?required}
-: ${BOSH_CA_CERT:?required}
-: ${BOSH_CLIENT:?required}
-: ${BOSH_CLIENT_SECRET:?required}
 : ${BOSH_DEPLOYMENT:?required}
+
+export BOSH_ENVIRONMENT=`bosh-cli int director-state/director-creds.yml --path /internal_ip`
+export BOSH_CA_CERT="$(bosh-cli int director-state/director-creds.yml --path /director_ssl/ca)"
+export BOSH_CLIENT=admin
+export BOSH_CLIENT_SECRET=`bosh-cli int director-state/director-creds.yml --path /admin_password`
 
 STEMCELL_OS=${STEMCELL_OS:-ubuntu-trusty}
 STEMCELL_VERSION=$(cat stemcell/version)

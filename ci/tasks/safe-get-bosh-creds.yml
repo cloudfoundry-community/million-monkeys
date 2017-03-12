@@ -10,7 +10,7 @@ inputs:
   - name: monkeys
 
 outputs:
-  - name: director_creds
+  - name: director-state
 
 params:
   GITHUB_TOKEN:

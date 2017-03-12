@@ -10,7 +10,7 @@ inputs:
   - name: monkeys
   - name: stemcell
   - name: release
-  - name: director_creds
+  - name: director-state
 
 outputs:
   - name: compiled-release
