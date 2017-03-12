@@ -44,6 +44,8 @@ Submit a PR, and the additional release will be generated into the pipeline soon
 
 ## Updating pipeline
 
+After merging PRs, update the pipeline with:
+  
 ```
 ./ci/repipe.yml
 ```

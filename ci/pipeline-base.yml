@@ -21,7 +21,7 @@ resources:
 
 jobs:
 - name: upload-stemcell
-  public: true
+  public: false
   serial: true
   plan:
   - aggregate:

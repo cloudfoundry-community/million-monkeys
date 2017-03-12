@@ -6,7 +6,6 @@ resources:
 
 jobs:
 - name: (( grab release.release_label ))
-  public: true
   serial: true
   plan:
   - aggregate:

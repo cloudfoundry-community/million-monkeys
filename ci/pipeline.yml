@@ -50,7 +50,6 @@ jobs:
     params:
       BOSH_DEPLOYMENT: bosh-release
     task: export-release
-  public: true
   serial: true
 - name: cf-release
   plan:
@@ -78,7 +77,6 @@ jobs:
     params:
       BOSH_DEPLOYMENT: cf-release
     task: export-release
-  public: true
   serial: true
 - name: credhub-release
   plan:
@@ -106,7 +104,6 @@ jobs:
     params:
       BOSH_DEPLOYMENT: credhub-release
     task: export-release
-  public: true
   serial: true
 - name: stannis-boshrelease
   plan:
@@ -134,7 +131,6 @@ jobs:
     params:
       BOSH_DEPLOYMENT: stannis-boshrelease
     task: export-release
-  public: true
   serial: true
 - name: uaa-release
   plan:
@@ -162,7 +158,6 @@ jobs:
     params:
       BOSH_DEPLOYMENT: uaa-release
     task: export-release
-  public: true
   serial: true
 release:
   release_label: uaa-release
