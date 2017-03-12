@@ -5,6 +5,23 @@ RUN dpkg-reconfigure locales
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
+#basic deps
+RUN apt-get update && apt-get -y upgrade && \
+    apt-get install -y \
+    	build-essential \
+    	git \
+    	curl \
+    	wget \
+    	tar \
+      unzip zip \
+    	libssl-dev \
+    	libreadline-dev \
+    	dnsutils \
+    	xvfb \
+    	jq \
+    	realpath \
+    	&& apt-get clean
+
 ADD https://github.com/geofffranks/spruce/releases/download/v1.8.13/spruce-linux-amd64 /bin/spruce
 ADD https://github.com/starkandwayne/safe/releases/download/v0.1.3/safe-linux-amd64 /bin/safe
 
