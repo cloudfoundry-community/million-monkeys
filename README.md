@@ -10,6 +10,24 @@ Whenever a new stemcell is published, all community BOSH releases are deployed; 
 
 * [CI pipeline in action](https://ci.starkandwayne.com/teams/main/pipelines/million-monkeys)
 
+## Usage
+
+A sample use case for `bosh-cli create-env` or `bosh-cli int`:
+
+```
+bosh-cli int bosh.yml \
+  -o <(curl https://s3.amazonaws.com/million-monkeys-releases-latest/bosh-latest.patch.yml)
+```
+
+Another is with `spruce merge`:
+
+```
+spruce merge bosh.yml
+  <(curl https://s3.amazonaws.com/million-monkeys-releases-latest/bosh-latest.spruce.yml)
+```
+
+Note the slight differences in the suffix above: `.spruce.yml` vs `.patch.yml`.
+
 ## Add new release
 
 Create a file in `releases/`.
@@ -45,7 +63,7 @@ Submit a PR, and the additional release will be generated into the pipeline soon
 ## Updating pipeline
 
 After merging PRs, update the pipeline with:
-  
+
 ```
 ./ci/repipe.yml
 ```
