@@ -16,6 +16,14 @@ resources:
   source:
     repository: cloudfoundry-community/stannis-boshrelease
 
+- name: ci-image
+  type: docker-image
+  source:
+    email: {{docker-hub-email}}
+    username: {{docker-hub-username}}
+    password: {{docker-hub-password}}
+    repository: cfcommunity/monkeys-ci
+
 jobs:
 - name: upload-stemcell
   public: true
@@ -43,3 +51,11 @@ jobs:
       BOSH_CA_CERT: {{BOSH_CA_CERT}}
       BOSH_CLIENT: {{BOSH_CLIENT}}
       BOSH_CLIENT_SECRET: {{BOSH_CLIENT_SECRET}}
+
+- name: build-task-image
+  serial: true
+  plan:
+  - get: monkeys
+  - put: ci-image
+    params:
+      build: monkeys/ci/image
