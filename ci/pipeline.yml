@@ -53,6 +53,7 @@ jobs:
     - get: ubuntu-trusty-stemcell
       params: {tarball: false}
       passed: [upload-stemcell]
+      trigger: true
     - get: stannis-boshrelease
   - task: director-creds
     file: monkeys/ci/tasks/director-creds.yml
