@@ -17,6 +17,7 @@ outputs:
 
 params:
   BOSH_DEPLOYMENT:
+  RELEASE_ORG_NAME:
   BUCKET_URL:
 
 run:

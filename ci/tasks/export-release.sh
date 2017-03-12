@@ -3,6 +3,7 @@
 set -eu
 
 : ${BOSH_DEPLOYMENT:?required}
+: ${RELEASE_ORG_NAME:?required}
 : ${BUCKET_URL:?required}
 
 export BOSH_ENVIRONMENT=`bosh-cli int director-state/director-creds.yml --path /internal_ip`
@@ -53,13 +54,14 @@ bosh-cli -n -d $BOSH_DEPLOYMENT deploy manifest.yml
 bosh-cli -d $BOSH_DEPLOYMENT export-release $RELEASE_NAME/$RELEASE_VERSION $STEMCELL_OS/$STEMCELL_VERSION
 
 # stannis-12.0-ubuntu-trusty-3363.12-20170312-150301-020284203-20170312150310.tgz
-mv *.tgz compiled-release/$RELEASE_NAME-$RELEASE_VERSION-$STEMCELL_OS-$STEMCELL_VERSION.tgz
-sha1sum compiled-release/*.tgz
+mkdir -p $(dirname compiled-release/$RELEASE_ORG_NAME)
+mv *.tgz compiled-release/$RELEASE_ORG_NAME-$RELEASE_VERSION-$STEMCELL_OS-$STEMCELL_VERSION.tgz
+sha1sum compiled-release/$RELEASE_ORG_NAME*.tgz
 
-RELEASE_SHA1=$(sha1sum compiled-release/*.tgz | awk '{print $1}')
-RELEASE_FILENAME=$(basename compiled-release/*.tgz)
+RELEASE_SHA1=$(sha1sum compiled-release/$RELEASE_ORG_NAME*.tgz | awk '{print $1}')
+RELEASE_FILENAME=$(basename compiled-release/$RELEASE_ORG_NAME*.tgz)
 
-cat > compiled-release/$RELEASE_NAME-latest.spruce.yml <<YAML
+cat > compiled-release/$RELEASE_ORG_NAME-latest.spruce.yml <<YAML
 ---
 releases:
 - name: $RELEASE_NAME
@@ -67,9 +69,9 @@ releases:
   sha1: $RELEASE_SHA1
   url: $BUCKET_URL/$RELEASE_FILENAME
 YAML
-cp compiled-release/$RELEASE_NAME-{latest,$RELEASE_VERSION}.spruce.yml
+cp compiled-release/$RELEASE_ORG_NAME-{latest,$RELEASE_VERSION}.spruce.yml
 
-cat > compiled-release/$RELEASE_NAME-latest.patch.yml <<YAML
+cat > compiled-release/$RELEASE_ORG_NAME-latest.patch.yml <<YAML
 - type: replace
   path: /releases/name=$RELEASE_NAME?
   value:
@@ -78,7 +80,7 @@ cat > compiled-release/$RELEASE_NAME-latest.patch.yml <<YAML
     sha1: $RELEASE_SHA1
     url: $BUCKET_URL/$RELEASE_FILENAME
 YAML
-cp compiled-release/$RELEASE_NAME-{latest,$RELEASE_VERSION}.patch.yml
+cp compiled-release/$RELEASE_ORG_NAME-{latest,$RELEASE_VERSION}.patch.yml
 
 #
 # cleanup

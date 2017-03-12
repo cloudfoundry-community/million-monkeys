@@ -12,7 +12,7 @@ resources:
     secret_access_key: {{cfcommunity-aws-secret}}
     region_name: us-east-1
     # e.g stannis-12.0-ubuntu-trusty-3363.12.tgz
-    regexp: (( concat release.release_label "-\([\\d\\.]+\)-ubuntu-trusty-[\\d\\.]+.tgz" ))
+    regexp: (( concat release.release_org_name "-\([\\d\\.]+\)-ubuntu-trusty-[\\d\\.]+.tgz" ))
 
 - name: (( concat release.release_label "-compiled-release-yml" ))
   type: s3
@@ -21,7 +21,7 @@ resources:
     access_key_id: {{cfcommunity-aws-access}}
     secret_access_key: {{cfcommunity-aws-secret}}
     region_name: us-east-1
-    versioned_file: (( concat release.release_label "-latest.spruce.yml" ))
+    versioned_file: (( concat release.release_org_name "-latest.spruce.yml" ))
 
 - name: (( concat release.release_label "-compiled-release-patch-yml" ))
   type: s3
@@ -30,7 +30,7 @@ resources:
     access_key_id: {{cfcommunity-aws-access}}
     secret_access_key: {{cfcommunity-aws-secret}}
     region_name: us-east-1
-    versioned_file: (( concat release.release_label "-latest.patch.yml" ))
+    versioned_file: (( concat release.release_org_name "-latest.patch.yml" ))
 
 
 jobs:
@@ -59,17 +59,18 @@ jobs:
       release: (( grab release.release_label ))
     params:
       BOSH_DEPLOYMENT: (( grab release.release_label ))
+      RELEASE_ORG_NAME: (( grab release.release_org_name ))
       BUCKET_URL: https://s3.amazonaws.com/million-monkeys-releases
   - aggregate:
     - put: (( concat release.release_label "-compiled-release" ))
       params:
-        file: compiled-release/*.tgz
+        file: (( concat "compiled-release/" release.release_org_name "*.tgz" ))
         acl: public-read
     - put: (( concat release.release_label "-compiled-release-yml" ))
       params:
-        file: compiled-release/*-latest.spruce.yml
+        file: (( concat "compiled-release/" release.release_org_name "*-latest.spruce.yml" ))
         acl: public-read
     - put: (( concat release.release_label "-compiled-release-patch-yml" ))
       params:
-        file: compiled-release/*-latest.patch.yml
+        file: (( concat "compiled-release/" release.release_org_name "*-latest.patch.yml" ))
         acl: public-read
