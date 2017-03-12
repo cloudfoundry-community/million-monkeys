@@ -8,7 +8,6 @@ image_resource:
 
 inputs:
   - name: monkeys
-  - name: director-state
   - name: stemcell
   - name: release
 

@@ -5,14 +5,31 @@ resources:
   source:
     uri: https://github.com/cloudfoundry-community/million-monkeys.git
 
+- name: ubuntu-trusty-stemcell
+  type: bosh-io-stemcell
+  source:
+    name: bosh-vsphere-esxi-ubuntu-trusty-go_agent
+    version_family: latest
+
+- name: stannis-boshrelease
+  type: bosh-io-release
+  source:
+    repository: cloudfoundry-community/stannis-boshrelease
+
 jobs:
 - name: stannis-boshrelease
   public: true
   serial: true
   plan:
-  - get: monkeys
+  - aggregate:
+    - get: monkeys
+    - get: ubuntu-trusty-stemcell
+    - get: stannis-boshrelease
   - task: export-release
     file: monkeys/ci/tasks/export-release.yml
+    input_mapping:
+      stemcell: ubuntu-trusty-stemcell
+      release: stannis-boshrelease
     params:
       BOSH_DEPLOYMENT: stannis-compilation
       BOSH_ENVIRONMENT: {{BOSH_ENVIRONMENT}}
