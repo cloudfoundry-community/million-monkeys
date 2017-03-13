@@ -199,6 +199,48 @@ jobs:
         file: compiled-release/pivotal-cf/credhub-release*-latest.patch.yml
       put: credhub-release-compiled-release-patch-yml
   serial: true
+- name: dingo-postgresql-release
+  plan:
+  - aggregate:
+    - get: monkeys
+    - get: ubuntu-trusty-stemcell
+      params:
+        tarball: false
+      passed:
+      - upload-stemcell
+      trigger: true
+    - get: dingo-postgresql-release
+      trigger: true
+  - file: monkeys/ci/tasks/director-creds.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      VAULT_ADDR: {{VAULT_ADDR}}
+      VAULT_PREFIX: {{VAULT_PREFIX}}
+      VAULT_SKIP_VERIFY: 1
+    task: director-creds
+  - file: monkeys/ci/tasks/export-release.yml
+    input_mapping:
+      release: dingo-postgresql-release
+      stemcell: ubuntu-trusty-stemcell
+    params:
+      BOSH_DEPLOYMENT: dingo-postgresql-release
+      BUCKET_URL: https://s3.amazonaws.com/million-monkeys-releases
+      RELEASE_ORG_NAME: dingotiles/dingo-postgresql-release
+    task: export-release
+  - aggregate:
+    - params:
+        acl: public-read
+        file: compiled-release/dingotiles/dingo-postgresql-release*.tgz
+      put: dingo-postgresql-release-compiled-release
+    - params:
+        acl: public-read
+        file: compiled-release/dingotiles/dingo-postgresql-release*-latest.spruce.yml
+      put: dingo-postgresql-release-compiled-release-yml
+    - params:
+        acl: public-read
+        file: compiled-release/dingotiles/dingo-postgresql-release*-latest.patch.yml
+      put: dingo-postgresql-release-compiled-release-patch-yml
+  serial: true
 - name: stannis-boshrelease
   plan:
   - aggregate:
@@ -389,6 +431,34 @@ resources:
     region_name: us-east-1
     secret_access_key: {{cfcommunity-aws-secret}}
     versioned_file: pivotal-cf/credhub-release-latest.patch.yml
+  type: s3
+- name: dingo-postgresql-release
+  source:
+    repository: dingotiles/dingo-postgresql-release
+  type: bosh-io-release
+- name: dingo-postgresql-release-compiled-release
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases
+    regexp: dingotiles/dingo-postgresql-release-([\d\.]+)-ubuntu-trusty-[\d\.]+.tgz
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+  type: s3
+- name: dingo-postgresql-release-compiled-release-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: dingotiles/dingo-postgresql-release-latest.spruce.yml
+  type: s3
+- name: dingo-postgresql-release-compiled-release-patch-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: dingotiles/dingo-postgresql-release-latest.patch.yml
   type: s3
 - name: stannis-boshrelease
   source:

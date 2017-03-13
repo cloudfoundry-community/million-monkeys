@@ -1,0 +1,4 @@
+---
+release:
+  release_label: dingo-postgresql-release
+  release_org_name: dingotiles/dingo-postgresql-release
