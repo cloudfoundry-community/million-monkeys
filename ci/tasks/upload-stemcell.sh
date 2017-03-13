@@ -7,8 +7,6 @@ export BOSH_CA_CERT="$(bosh-cli int director-state/director-creds.yml --path /di
 export BOSH_CLIENT=admin
 export BOSH_CLIENT_SECRET=`bosh-cli int director-state/director-creds.yml --path /admin_password`
 
-set -x
-
 bosh-cli -n upload-stemcell stemcell/*.tgz
 
 tar -xzf stemcell/*.tgz $( tar -tzf stemcell/*.tgz | grep 'stemcell.MF' )
@@ -36,13 +34,18 @@ cat > resource_pools.patch.yml <<YAML
   value:
 YAML
 
-stemcell_short=vsphere-esxi
-stemcell_name=bosh-${stemcell_short}-ubuntu-trusty-go_agent
-stemcell_json=$(curl -sk https://genesis.starkandwayne.com/v1/stemcell/$stemcell_name | jq -r ".[] | select(.version == \"$STEMCELL_VERSION\")")
-if [[ "${stemcell_json:-null}" != "null" ]]; then
-  cp resource_pools.spruce.yml compiled-stemcell/stemcell-$stemcell_short.spruce.yml
-  spruce merge <(echo $stemcell_json) | indent_value >> compiled-stemcell/stemcell-$stemcell_short.spruce.yml
+stemcells_short=(vsphere-esxi warden-boshlite aws-xen-hvm azure-hyperv google-kvm softlayer-xen openstack-kvm)
+for stemcell_short in "${stemcells_short[@]}"; do
+  stemcell_name=bosh-${stemcell_short}-ubuntu-trusty-go_agent
+  stemcell_json=$(curl -sk https://genesis.starkandwayne.com/v1/stemcell/$stemcell_name | jq -r ".[] | select(.version == \"$STEMCELL_VERSION\")")
+  if [[ "${stemcell_json:-null}" != "null" ]]; then
+    cp resource_pools.spruce.yml compiled-stemcell/stemcell-$stemcell_short.spruce.yml
+    spruce merge <(echo $stemcell_json) | indent_value >> compiled-stemcell/stemcell-$stemcell_short.spruce.yml
 
-  cp resource_pools.patch.yml compiled-stemcell/stemcell-$stemcell_short.patch.yml
-  spruce merge <(echo $stemcell_json) | indent_value >> compiled-stemcell/stemcell-$stemcell_short.patch.yml
-fi
+    cp resource_pools.patch.yml compiled-stemcell/stemcell-$stemcell_short.patch.yml
+    spruce merge <(echo $stemcell_json) | indent_value >> compiled-stemcell/stemcell-$stemcell_short.patch.yml
+    echo "Created stemcell yml: $stemcell_name"
+  else
+    echo "!! Unknown stemcell name on genesis: $stemcell_name"
+  fi
+done
