@@ -100,3 +100,9 @@ After merging PRs, update the pipeline with:
 ```
 ./ci/repipe.yml
 ```
+
+## Thanks
+
+Thanks as always to the BOSH core team for the last five years of work. So many people have contributed to BOSH. Thanks to Pivotal, IBM, VMWare and other companies for funding its development.
+
+I found the `export-release.sh` script in the https://github.com/cloudfoundry/bosh CI tasks. I didn't know you could deploy a manifest with an empty `instance_groups`. That makes it possible to compile the packages of any arbitrary BOSH release without knowing anything about it (required properties etc).
