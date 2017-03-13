@@ -98,35 +98,3 @@ bosh-cli -n -d $BOSH_DEPLOYMENT delete-deployment
 #   sha1: 3f4251c27a1173812199ae6301dc968660d8ae8b
 #   url: https://bosh.io/d/stemcells/bosh-aws-xen-hvm-ubuntu-trusty-go_agent?v=3363.12
 #   version: "3363.12"
-
-indent_value() {
-  c="s/^/    /"
-  case $(uname) in
-    Darwin) sed -l "$c";; # mac/bsd sed: -l buffers on line boundaries
-    *)      sed -u "$c";; # unix/gnu sed: -u unbuffered (arbitrary) chunks of data
-  esac
-}
-
-cat > resource_pools.spruce.yml <<YAML
----
-resource_pools:
-- name: vms
-  stemcell:
-YAML
-cat > resource_pools.patch.yml <<YAML
----
-- type: replace
-  path: /resource_pools/name=vms/stemcell?
-  value:
-YAML
-
-stemcell_short=vsphere-esxi
-stemcell_name=bosh-${stemcell_short}-ubuntu-trusty-go_agent
-stemcell_json=$(curl -sk https://genesis.starkandwayne.com/v1/stemcell/$stemcell_name | jq -r ".[] | select(.version == \"$STEMCELL_VERSION\")")
-if [[ "${stemcell_json:-null}" != "null" ]]; then
-  cp resource_pools.spruce.yml compiled-stemcell/stemcell-$stemcell_short.spruce.yml
-  spruce merge <(echo $stemcell_json) | indent_value >> compiled-stemcell/stemcell-$stemcell_short.spruce.yml
-
-  cp resource_pools.patch.yml compiled-stemcell/stemcell-$stemcell_short.patch.yml
-  spruce merge <(echo $stemcell_json) | indent_value >> compiled-stemcell/stemcell-$stemcell_short.patch.yml
-fi

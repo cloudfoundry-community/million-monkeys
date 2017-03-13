@@ -57,6 +57,16 @@ jobs:
     file: monkeys/ci/tasks/upload-stemcell.yml
     input_mapping:
       stemcell: ubuntu-trusty-stemcell
+  - aggregate:
+    - put: compiled-stemcell-vsphere-esxi-spruce
+      params:
+        file: compiled-stemcell/stemcell-vsphere-esxi.spruce.yml
+        acl: public-read
+    - put: compiled-stemcell-vsphere-esxi-patch
+      params:
+        file: compiled-stemcell/stemcell-vsphere-esxi.patch.yml
+        acl: public-read
+
 
 - name: build-task-image
   serial: true

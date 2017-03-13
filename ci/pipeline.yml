@@ -15,6 +15,15 @@ jobs:
     input_mapping:
       stemcell: ubuntu-trusty-stemcell
     task: upload-stemcell
+  - aggregate:
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-vsphere-esxi.spruce.yml
+      put: compiled-stemcell-vsphere-esxi-spruce
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-vsphere-esxi.patch.yml
+      put: compiled-stemcell-vsphere-esxi-patch
   public: false
   serial: true
 - name: build-task-image
@@ -65,14 +74,6 @@ jobs:
         acl: public-read
         file: compiled-release/cloudfoundry/bosh*-latest.patch.yml
       put: bosh-release-compiled-release-patch-yml
-    - params:
-        acl: public-read
-        file: compiled-stemcell/stemcell-vsphere-esxi.spruce.yml
-      put: compiled-stemcell-vsphere-esxi-spruce
-    - params:
-        acl: public-read
-        file: compiled-stemcell/stemcell-vsphere-esxi.patch.yml
-      put: compiled-stemcell-vsphere-esxi-patch
   serial: true
 - name: cf-release
   plan:
@@ -115,14 +116,6 @@ jobs:
         acl: public-read
         file: compiled-release/cloudfoundry/cf-release*-latest.patch.yml
       put: cf-release-compiled-release-patch-yml
-    - params:
-        acl: public-read
-        file: compiled-stemcell/stemcell-vsphere-esxi.spruce.yml
-      put: compiled-stemcell-vsphere-esxi-spruce
-    - params:
-        acl: public-read
-        file: compiled-stemcell/stemcell-vsphere-esxi.patch.yml
-      put: compiled-stemcell-vsphere-esxi-patch
   serial: true
 - name: credhub-release
   plan:
@@ -165,14 +158,6 @@ jobs:
         acl: public-read
         file: compiled-release/pivotal-cf/credhub-release*-latest.patch.yml
       put: credhub-release-compiled-release-patch-yml
-    - params:
-        acl: public-read
-        file: compiled-stemcell/stemcell-vsphere-esxi.spruce.yml
-      put: compiled-stemcell-vsphere-esxi-spruce
-    - params:
-        acl: public-read
-        file: compiled-stemcell/stemcell-vsphere-esxi.patch.yml
-      put: compiled-stemcell-vsphere-esxi-patch
   serial: true
 - name: stannis-boshrelease
   plan:
@@ -215,14 +200,6 @@ jobs:
         acl: public-read
         file: compiled-release/cloudfoundry-community/stannis-boshrelease*-latest.patch.yml
       put: stannis-boshrelease-compiled-release-patch-yml
-    - params:
-        acl: public-read
-        file: compiled-stemcell/stemcell-vsphere-esxi.spruce.yml
-      put: compiled-stemcell-vsphere-esxi-spruce
-    - params:
-        acl: public-read
-        file: compiled-stemcell/stemcell-vsphere-esxi.patch.yml
-      put: compiled-stemcell-vsphere-esxi-patch
   serial: true
 - name: uaa-release
   plan:
@@ -265,14 +242,6 @@ jobs:
         acl: public-read
         file: compiled-release/cloudfoundry/uaa-release*-latest.patch.yml
       put: uaa-release-compiled-release-patch-yml
-    - params:
-        acl: public-read
-        file: compiled-stemcell/stemcell-vsphere-esxi.spruce.yml
-      put: compiled-stemcell-vsphere-esxi-spruce
-    - params:
-        acl: public-read
-        file: compiled-stemcell/stemcell-vsphere-esxi.patch.yml
-      put: compiled-stemcell-vsphere-esxi-patch
   serial: true
 release:
   release_label: uaa-release

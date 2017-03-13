@@ -11,5 +11,8 @@ inputs:
   - name: stemcell
   - name: director-state
 
+outputs:
+  - name: compiled-stemcell
+
 run:
   path: monkeys/ci/tasks/upload-stemcell.sh
