@@ -19,6 +19,25 @@ resources:
     password: {{docker-hub-password}}
     repository: cfcommunity/monkeys-ci
 
+- name: compiled-stemcell-vsphere-esxi-spruce
+  type: s3
+  source:
+    bucket: million-monkeys-releases-latest
+    access_key_id: {{cfcommunity-aws-access}}
+    secret_access_key: {{cfcommunity-aws-secret}}
+    region_name: us-east-1
+    versioned_file: stemcell-vsphere-esxi.spruce.yml
+
+- name: compiled-stemcell-vsphere-esxi-patch
+  type: s3
+  source:
+    bucket: million-monkeys-releases-latest
+    access_key_id: {{cfcommunity-aws-access}}
+    secret_access_key: {{cfcommunity-aws-secret}}
+    region_name: us-east-1
+    versioned_file: stemcell-vsphere-esxi.patch.yml
+
+
 jobs:
 - name: upload-stemcell
   public: false

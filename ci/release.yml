@@ -74,3 +74,11 @@ jobs:
       params:
         file: (( concat "compiled-release/" release.release_org_name "*-latest.patch.yml" ))
         acl: public-read
+    - put: compiled-stemcell-vsphere-esxi-spruce
+      params:
+        file: compiled-stemcell/stemcell-vsphere-esxi.spruce.yml
+        acl: public-read
+    - put: compiled-stemcell-vsphere-esxi-patch
+      params:
+        file: compiled-stemcell/stemcell-vsphere-esxi.patch.yml
+        acl: public-read

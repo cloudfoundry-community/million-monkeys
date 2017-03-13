@@ -17,13 +17,18 @@ A sample use case for `bosh-cli create-env` or `bosh-cli int`:
 ```
 bosh-cli int bosh.yml \
   -o <(curl -s https://s3.amazonaws.com/million-monkeys-releases-latest/cloudfoundry/bosh-latest.patch.yml)
+  -o vsphere/cpi.yml
+  -o <(curl -s https://s3.amazonaws.com/million-monkeys-releases-latest/stemcell-vsphere-esxi.patch.yml)
 ```
+
+This is patching in the latest bosh & vsphere-esxi stemcell combination.
 
 Another is with `spruce merge`:
 
 ```
 spruce merge bosh.yml
   <(curl -s https://s3.amazonaws.com/million-monkeys-releases-latest/cloudfoundry/bosh-latest.spruce.yml)
+  <(curl -s https://s3.amazonaws.com/million-monkeys-releases-latest/stemcell-vsphere-esxi.spruce.yml)
 ```
 
 Note the slight differences in the suffix above: `.spruce.yml` vs `.patch.yml`.
