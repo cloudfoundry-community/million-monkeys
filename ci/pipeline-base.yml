@@ -19,25 +19,6 @@ resources:
     password: {{docker-hub-password}}
     repository: cfcommunity/monkeys-ci
 
-- name: compiled-stemcell-vsphere-esxi-spruce
-  type: s3
-  source:
-    bucket: million-monkeys-releases-latest
-    access_key_id: {{cfcommunity-aws-access}}
-    secret_access_key: {{cfcommunity-aws-secret}}
-    region_name: us-east-1
-    versioned_file: stemcell-vsphere-esxi.spruce.yml
-
-- name: compiled-stemcell-vsphere-esxi-patch
-  type: s3
-  source:
-    bucket: million-monkeys-releases-latest
-    access_key_id: {{cfcommunity-aws-access}}
-    secret_access_key: {{cfcommunity-aws-secret}}
-    region_name: us-east-1
-    versioned_file: stemcell-vsphere-esxi.patch.yml
-
-
 jobs:
 - name: upload-stemcell
   public: false
@@ -58,14 +39,54 @@ jobs:
     input_mapping:
       stemcell: ubuntu-trusty-stemcell
   - aggregate:
-    - put: compiled-stemcell-vsphere-esxi-spruce
-      params:
+    - params:
+        acl: public-read
         file: compiled-stemcell/stemcell-vsphere-esxi.spruce.yml
+      put: compiled-stemcell-vsphere-esxi-spruce
+    - params:
         acl: public-read
-    - put: compiled-stemcell-vsphere-esxi-patch
-      params:
         file: compiled-stemcell/stemcell-vsphere-esxi.patch.yml
+      put: compiled-stemcell-vsphere-esxi-patch
+    - params:
         acl: public-read
+        file: compiled-stemcell/stemcell-warden-boshlite.spruce.yml
+      put: compiled-stemcell-warden-boshlite-spruce
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-warden-boshlite.patch.yml
+      put: compiled-stemcell-warden-boshlite-patch
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-aws-xen-hvm.spruce.yml
+      put: compiled-stemcell-aws-xen-hvm-spruce
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-aws-xen-hvm.patch.yml
+      put: compiled-stemcell-aws-xen-hvm-patch
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-azure-hyperv.spruce.yml
+      put: compiled-stemcell-azure-hyperv-spruce
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-azure-hyperv.patch.yml
+      put: compiled-stemcell-azure-hyperv-patch
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-google-kvm.spruce.yml
+      put: compiled-stemcell-google-kvm-spruce
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-google-kvm.patch.yml
+      put: compiled-stemcell-google-kvm-patch
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-openstack-kvm.spruce.yml
+      put: compiled-stemcell-openstack-kvm-spruce
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-openstack-kvm.patch.yml
+      put: compiled-stemcell-openstack-kvm-patch
 
 
 - name: build-task-image

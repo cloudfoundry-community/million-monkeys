@@ -33,6 +33,34 @@ spruce merge bosh.yml
 
 Note the slight differences in the suffix above: `.spruce.yml` vs `.patch.yml`.
 
+Currently supported stemcells are (to replace `vsphere-esxi` in examples above):
+
+* `vsphere-esxi`
+* `warden-boshlite`
+* `aws-xen-hvm`
+* `azure-hyperv`
+* `google-kvm`
+* `openstack-kvm`
+
+For example, for the latest light AWS stemcell:
+
+```
+curl -s https://s3.amazonaws.com/million-monkeys-releases-latest/stemcell-aws-xen-hvm.spruce.yml
+```
+
+The output might be similar to:
+
+```yaml
+---
+resource_pools:
+- name: vms
+  stemcell:
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    sha1: 3f4251c27a1173812199ae6301dc968660d8ae8b
+    url: https://bosh.io/d/stemcells/bosh-aws-xen-hvm-ubuntu-trusty-go_agent?v=3363.12
+    version: "3363.12"
+```
+
 ## Add new release
 
 Create a file in `releases/`.

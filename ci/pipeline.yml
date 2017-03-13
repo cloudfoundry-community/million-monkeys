@@ -24,6 +24,46 @@ jobs:
         acl: public-read
         file: compiled-stemcell/stemcell-vsphere-esxi.patch.yml
       put: compiled-stemcell-vsphere-esxi-patch
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-warden-boshlite.spruce.yml
+      put: compiled-stemcell-warden-boshlite-spruce
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-warden-boshlite.patch.yml
+      put: compiled-stemcell-warden-boshlite-patch
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-aws-xen-hvm.spruce.yml
+      put: compiled-stemcell-aws-xen-hvm-spruce
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-aws-xen-hvm.patch.yml
+      put: compiled-stemcell-aws-xen-hvm-patch
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-azure-hyperv.spruce.yml
+      put: compiled-stemcell-azure-hyperv-spruce
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-azure-hyperv.patch.yml
+      put: compiled-stemcell-azure-hyperv-patch
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-google-kvm.spruce.yml
+      put: compiled-stemcell-google-kvm-spruce
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-google-kvm.patch.yml
+      put: compiled-stemcell-google-kvm-patch
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-openstack-kvm.spruce.yml
+      put: compiled-stemcell-openstack-kvm-spruce
+    - params:
+        acl: public-read
+        file: compiled-stemcell/stemcell-openstack-kvm.patch.yml
+      put: compiled-stemcell-openstack-kvm-patch
   public: false
   serial: true
 - name: build-task-image
@@ -263,22 +303,6 @@ resources:
     repository: cfcommunity/monkeys-ci
     username: {{docker-hub-username}}
   type: docker-image
-- name: compiled-stemcell-vsphere-esxi-spruce
-  source:
-    access_key_id: {{cfcommunity-aws-access}}
-    bucket: million-monkeys-releases-latest
-    region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
-    versioned_file: stemcell-vsphere-esxi.spruce.yml
-  type: s3
-- name: compiled-stemcell-vsphere-esxi-patch
-  source:
-    access_key_id: {{cfcommunity-aws-access}}
-    bucket: million-monkeys-releases-latest
-    region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
-    versioned_file: stemcell-vsphere-esxi.patch.yml
-  type: s3
 - name: bosh-release
   source:
     repository: cloudfoundry/bosh
@@ -422,4 +446,161 @@ resources:
     secret_access_key: {{cfcommunity-aws-secret}}
     versioned_file: cloudfoundry/uaa-release-latest.patch.yml
   type: s3
+- name: compiled-stemcell-vsphere-esxi-spruce
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: stemcell-vsphere-esxi.spruce.yml
+  type: s3
+- name: compiled-stemcell-vsphere-esxi-patch
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: stemcell-vsphere-esxi.patch.yml
+  type: s3
+- name: compiled-stemcell-warden-boshlite-spruce
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: stemcell-warden-boshlite.spruce.yml
+  type: s3
+- name: compiled-stemcell-warden-boshlite-patch
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: stemcell-warden-boshlite.patch.yml
+  type: s3
+- name: compiled-stemcell-aws-xen-hvm-spruce
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: stemcell-aws-xen-hvm.spruce.yml
+  type: s3
+- name: compiled-stemcell-aws-xen-hvm-patch
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: stemcell-aws-xen-hvm.patch.yml
+  type: s3
+- name: compiled-stemcell-azure-hyperv-spruce
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: stemcell-azure-hyperv.spruce.yml
+  type: s3
+- name: compiled-stemcell-azure-hyperv-patch
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: stemcell-azure-hyperv.patch.yml
+  type: s3
+- name: compiled-stemcell-google-kvm-spruce
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: stemcell-google-kvm.spruce.yml
+  type: s3
+- name: compiled-stemcell-google-kvm-patch
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: stemcell-google-kvm.patch.yml
+  type: s3
+- name: compiled-stemcell-openstack-kvm-spruce
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: stemcell-openstack-kvm.spruce.yml
+  type: s3
+- name: compiled-stemcell-openstack-kvm-patch
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: stemcell-openstack-kvm.patch.yml
+  type: s3
+uploads:
+- name: vsphere-esxi
+  puts:
+  - params:
+      acl: public-read
+      file: compiled-stemcell/stemcell-vsphere-esxi.spruce.yml
+    put: compiled-stemcell-vsphere-esxi-spruce
+  - params:
+      acl: public-read
+      file: compiled-stemcell/stemcell-vsphere-esxi.patch.yml
+    put: compiled-stemcell-vsphere-esxi-patch
+- name: warden-boshlite
+  puts:
+  - params:
+      acl: public-read
+      file: compiled-stemcell/stemcell-warden-boshlite.spruce.yml
+    put: compiled-stemcell-warden-boshlite-spruce
+  - params:
+      acl: public-read
+      file: compiled-stemcell/stemcell-warden-boshlite.patch.yml
+    put: compiled-stemcell-warden-boshlite-patch
+- name: aws-xen-hvm
+  puts:
+  - params:
+      acl: public-read
+      file: compiled-stemcell/stemcell-aws-xen-hvm.spruce.yml
+    put: compiled-stemcell-aws-xen-hvm-spruce
+  - params:
+      acl: public-read
+      file: compiled-stemcell/stemcell-aws-xen-hvm.patch.yml
+    put: compiled-stemcell-aws-xen-hvm-patch
+- name: azure-hyperv
+  puts:
+  - params:
+      acl: public-read
+      file: compiled-stemcell/stemcell-azure-hyperv.spruce.yml
+    put: compiled-stemcell-azure-hyperv-spruce
+  - params:
+      acl: public-read
+      file: compiled-stemcell/stemcell-azure-hyperv.patch.yml
+    put: compiled-stemcell-azure-hyperv-patch
+- name: google-kvm
+  puts:
+  - params:
+      acl: public-read
+      file: compiled-stemcell/stemcell-google-kvm.spruce.yml
+    put: compiled-stemcell-google-kvm-spruce
+  - params:
+      acl: public-read
+      file: compiled-stemcell/stemcell-google-kvm.patch.yml
+    put: compiled-stemcell-google-kvm-patch
+- name: openstack-kvm
+  puts:
+  - params:
+      acl: public-read
+      file: compiled-stemcell/stemcell-openstack-kvm.spruce.yml
+    put: compiled-stemcell-openstack-kvm-spruce
+  - params:
+      acl: public-read
+      file: compiled-stemcell/stemcell-openstack-kvm.patch.yml
+    put: compiled-stemcell-openstack-kvm-patch
 

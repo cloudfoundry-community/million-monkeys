@@ -1,0 +1,6 @@
+vsphere-esxi
+warden-boshlite
+aws-xen-hvm
+azure-hyperv
+google-kvm
+openstack-kvm

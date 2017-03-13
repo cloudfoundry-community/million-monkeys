@@ -1,0 +1,31 @@
+---
+resources:
+- name: (( concat "compiled-stemcell-" stemcell_short "-spruce" ))
+  type: s3
+  source:
+    bucket: million-monkeys-releases-latest
+    access_key_id: {{cfcommunity-aws-access}}
+    secret_access_key: {{cfcommunity-aws-secret}}
+    region_name: us-east-1
+    versioned_file: (( concat "stemcell-" stemcell_short ".spruce.yml" ))
+
+- name: (( concat "compiled-stemcell-" stemcell_short "-patch" ))
+  type: s3
+  source:
+    bucket: million-monkeys-releases-latest
+    access_key_id: {{cfcommunity-aws-access}}
+    secret_access_key: {{cfcommunity-aws-secret}}
+    region_name: us-east-1
+    versioned_file: (( concat "stemcell-" stemcell_short ".patch.yml" ))
+
+uploads:
+- name: (( grab stemcell_short ))
+  puts:
+  - put: (( concat "compiled-stemcell-" stemcell_short "-spruce" ))
+    params:
+      file: (( concat "compiled-stemcell/stemcell-" stemcell_short ".spruce.yml" ))
+      acl: public-read
+  - put: (( concat "compiled-stemcell-" stemcell_short "-patch" ))
+    params:
+      file: (( concat "compiled-stemcell/stemcell-" stemcell_short ".patch.yml" ))
+      acl: public-read

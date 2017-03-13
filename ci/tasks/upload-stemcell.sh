@@ -34,8 +34,9 @@ cat > resource_pools.patch.yml <<YAML
   value:
 YAML
 
-stemcells_short=(vsphere-esxi warden-boshlite aws-xen-hvm azure-hyperv google-kvm softlayer-xen openstack-kvm)
-for stemcell_short in "${stemcells_short[@]}"; do
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+for stemcell_short in $(cat $DIR/stemcells); do
   stemcell_name=bosh-${stemcell_short}-ubuntu-trusty-go_agent
   stemcell_json=$(curl -sk https://genesis.starkandwayne.com/v1/stemcell/$stemcell_name | jq -r ".[] | select(.version == \"$STEMCELL_VERSION\")")
   if [[ "${stemcell_json:-null}" != "null" ]]; then

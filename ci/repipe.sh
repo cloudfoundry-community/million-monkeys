@@ -13,5 +13,17 @@ for release in $(ls releases/*.yml); do
   rm release-next.yml
 done
 
+for stemcell_short in $(cat stemcells); do
+  echo merging $stemcell_short
+  cat > stemcell_short.yml <<YAML
+---
+stemcell_short: $stemcell_short
+YAML
+  spruce --concourse merge --prune stemcell_short stemcell.yml stemcell_short.yml > stemcell-next.yml
+  spruce --concourse merge pipeline.yml stemcell-next.yml > pipeline-with-stemcell.yml
+  mv pipeline-with-stemcell.yml pipeline.yml
+  rm stemcell_short.yml stemcell-next.yml
+done
+
 cd $DIR/..
 fly -t vsphere sp -p $(basename $(pwd)) -c ci/pipeline.yml -l <(spruce merge ci/credentials.yml)
