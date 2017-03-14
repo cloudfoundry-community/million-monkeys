@@ -61,6 +61,14 @@ resource_pools:
     version: "3363.12"
 ```
 
+And more importantly, lots of skipping package compilation:
+
+```yaml
+Compiling package 'ruby/c1086875b047d112e46756dcb63d8f19e63b3ac4'... Skipped [Package already compiled] (00:01:54)
+Compiling package 'mysql/b7e73acc0bfe05f1c6cbfd97bf92d39b0d3155d5'... Skipped [Package already compiled] (00:01:28)
+Compiling package 'libpq/661f5817afe24fa2f18946d2757bff63246b1d0d'... Skipped [Package already compiled] (00:00:10)
+```
+
 ## Add new release
 
 Create a file in `releases/`.

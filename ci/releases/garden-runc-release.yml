@@ -1,0 +1,4 @@
+---
+release:
+  release_label: garden-runc-release
+  release_org_name: cloudfoundry/garden-runc-release

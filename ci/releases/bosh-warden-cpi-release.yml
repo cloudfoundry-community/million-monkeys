@@ -1,0 +1,4 @@
+---
+release:
+  release_label: bosh-warden-cpi-release
+  release_org_name: cppforlife/bosh-warden-cpi-release

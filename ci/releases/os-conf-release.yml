@@ -1,0 +1,4 @@
+---
+release:
+  release_label: os-conf-release
+  release_org_name: cloudfoundry/os-conf-release

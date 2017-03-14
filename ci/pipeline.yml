@@ -73,6 +73,48 @@ jobs:
       build: monkeys/ci/image
     put: ci-image
   serial: true
+- name: bosh-warden-cpi-release
+  plan:
+  - aggregate:
+    - get: monkeys
+    - get: ubuntu-trusty-stemcell
+      params:
+        tarball: false
+      passed:
+      - upload-stemcell
+      trigger: true
+    - get: bosh-warden-cpi-release
+      trigger: true
+  - file: monkeys/ci/tasks/director-creds.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      VAULT_ADDR: {{VAULT_ADDR}}
+      VAULT_PREFIX: {{VAULT_PREFIX}}
+      VAULT_SKIP_VERIFY: 1
+    task: director-creds
+  - file: monkeys/ci/tasks/export-release.yml
+    input_mapping:
+      release: bosh-warden-cpi-release
+      stemcell: ubuntu-trusty-stemcell
+    params:
+      BOSH_DEPLOYMENT: bosh-warden-cpi-release
+      BUCKET_URL: https://s3.amazonaws.com/million-monkeys-releases
+      RELEASE_ORG_NAME: cppforlife/bosh-warden-cpi-release
+    task: export-release
+  - aggregate:
+    - params:
+        acl: public-read
+        file: compiled-release/cppforlife/bosh-warden-cpi-release*.tgz
+      put: bosh-warden-cpi-release-compiled-release
+    - params:
+        acl: public-read
+        file: compiled-release/cppforlife/bosh-warden-cpi-release*-latest.spruce.yml
+      put: bosh-warden-cpi-release-compiled-release-yml
+    - params:
+        acl: public-read
+        file: compiled-release/cppforlife/bosh-warden-cpi-release*-latest.patch.yml
+      put: bosh-warden-cpi-release-compiled-release-patch-yml
+  serial: true
 - name: bosh-release
   plan:
   - aggregate:
@@ -241,6 +283,132 @@ jobs:
         file: compiled-release/dingotiles/dingo-postgresql-release*-latest.patch.yml
       put: dingo-postgresql-release-compiled-release-patch-yml
   serial: true
+- name: garden-runc-release
+  plan:
+  - aggregate:
+    - get: monkeys
+    - get: ubuntu-trusty-stemcell
+      params:
+        tarball: false
+      passed:
+      - upload-stemcell
+      trigger: true
+    - get: garden-runc-release
+      trigger: true
+  - file: monkeys/ci/tasks/director-creds.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      VAULT_ADDR: {{VAULT_ADDR}}
+      VAULT_PREFIX: {{VAULT_PREFIX}}
+      VAULT_SKIP_VERIFY: 1
+    task: director-creds
+  - file: monkeys/ci/tasks/export-release.yml
+    input_mapping:
+      release: garden-runc-release
+      stemcell: ubuntu-trusty-stemcell
+    params:
+      BOSH_DEPLOYMENT: garden-runc-release
+      BUCKET_URL: https://s3.amazonaws.com/million-monkeys-releases
+      RELEASE_ORG_NAME: cloudfoundry/garden-runc-release
+    task: export-release
+  - aggregate:
+    - params:
+        acl: public-read
+        file: compiled-release/cloudfoundry/garden-runc-release*.tgz
+      put: garden-runc-release-compiled-release
+    - params:
+        acl: public-read
+        file: compiled-release/cloudfoundry/garden-runc-release*-latest.spruce.yml
+      put: garden-runc-release-compiled-release-yml
+    - params:
+        acl: public-read
+        file: compiled-release/cloudfoundry/garden-runc-release*-latest.patch.yml
+      put: garden-runc-release-compiled-release-patch-yml
+  serial: true
+- name: networking-release
+  plan:
+  - aggregate:
+    - get: monkeys
+    - get: ubuntu-trusty-stemcell
+      params:
+        tarball: false
+      passed:
+      - upload-stemcell
+      trigger: true
+    - get: networking-release
+      trigger: true
+  - file: monkeys/ci/tasks/director-creds.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      VAULT_ADDR: {{VAULT_ADDR}}
+      VAULT_PREFIX: {{VAULT_PREFIX}}
+      VAULT_SKIP_VERIFY: 1
+    task: director-creds
+  - file: monkeys/ci/tasks/export-release.yml
+    input_mapping:
+      release: networking-release
+      stemcell: ubuntu-trusty-stemcell
+    params:
+      BOSH_DEPLOYMENT: networking-release
+      BUCKET_URL: https://s3.amazonaws.com/million-monkeys-releases
+      RELEASE_ORG_NAME: cloudfoundry/networking-release
+    task: export-release
+  - aggregate:
+    - params:
+        acl: public-read
+        file: compiled-release/cloudfoundry/networking-release*.tgz
+      put: networking-release-compiled-release
+    - params:
+        acl: public-read
+        file: compiled-release/cloudfoundry/networking-release*-latest.spruce.yml
+      put: networking-release-compiled-release-yml
+    - params:
+        acl: public-read
+        file: compiled-release/cloudfoundry/networking-release*-latest.patch.yml
+      put: networking-release-compiled-release-patch-yml
+  serial: true
+- name: os-conf-release
+  plan:
+  - aggregate:
+    - get: monkeys
+    - get: ubuntu-trusty-stemcell
+      params:
+        tarball: false
+      passed:
+      - upload-stemcell
+      trigger: true
+    - get: os-conf-release
+      trigger: true
+  - file: monkeys/ci/tasks/director-creds.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      VAULT_ADDR: {{VAULT_ADDR}}
+      VAULT_PREFIX: {{VAULT_PREFIX}}
+      VAULT_SKIP_VERIFY: 1
+    task: director-creds
+  - file: monkeys/ci/tasks/export-release.yml
+    input_mapping:
+      release: os-conf-release
+      stemcell: ubuntu-trusty-stemcell
+    params:
+      BOSH_DEPLOYMENT: os-conf-release
+      BUCKET_URL: https://s3.amazonaws.com/million-monkeys-releases
+      RELEASE_ORG_NAME: cloudfoundry/os-conf-release
+    task: export-release
+  - aggregate:
+    - params:
+        acl: public-read
+        file: compiled-release/cloudfoundry/os-conf-release*.tgz
+      put: os-conf-release-compiled-release
+    - params:
+        acl: public-read
+        file: compiled-release/cloudfoundry/os-conf-release*-latest.spruce.yml
+      put: os-conf-release-compiled-release-yml
+    - params:
+        acl: public-read
+        file: compiled-release/cloudfoundry/os-conf-release*-latest.patch.yml
+      put: os-conf-release-compiled-release-patch-yml
+  serial: true
 - name: stannis-boshrelease
   plan:
   - aggregate:
@@ -345,6 +513,34 @@ resources:
     repository: cfcommunity/monkeys-ci
     username: {{docker-hub-username}}
   type: docker-image
+- name: bosh-warden-cpi-release
+  source:
+    repository: cppforlife/bosh-warden-cpi-release
+  type: bosh-io-release
+- name: bosh-warden-cpi-release-compiled-release
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases
+    regexp: cppforlife/bosh-warden-cpi-release-([\d\.]+)-ubuntu-trusty-[\d\.]+.tgz
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+  type: s3
+- name: bosh-warden-cpi-release-compiled-release-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: cppforlife/bosh-warden-cpi-release-latest.spruce.yml
+  type: s3
+- name: bosh-warden-cpi-release-compiled-release-patch-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: cppforlife/bosh-warden-cpi-release-latest.patch.yml
+  type: s3
 - name: bosh-release
   source:
     repository: cloudfoundry/bosh
@@ -459,6 +655,90 @@ resources:
     region_name: us-east-1
     secret_access_key: {{cfcommunity-aws-secret}}
     versioned_file: dingotiles/dingo-postgresql-release-latest.patch.yml
+  type: s3
+- name: garden-runc-release
+  source:
+    repository: cloudfoundry/garden-runc-release
+  type: bosh-io-release
+- name: garden-runc-release-compiled-release
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases
+    regexp: cloudfoundry/garden-runc-release-([\d\.]+)-ubuntu-trusty-[\d\.]+.tgz
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+  type: s3
+- name: garden-runc-release-compiled-release-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: cloudfoundry/garden-runc-release-latest.spruce.yml
+  type: s3
+- name: garden-runc-release-compiled-release-patch-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: cloudfoundry/garden-runc-release-latest.patch.yml
+  type: s3
+- name: networking-release
+  source:
+    repository: cloudfoundry/networking-release
+  type: bosh-io-release
+- name: networking-release-compiled-release
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases
+    regexp: cloudfoundry/networking-release-([\d\.]+)-ubuntu-trusty-[\d\.]+.tgz
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+  type: s3
+- name: networking-release-compiled-release-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: cloudfoundry/networking-release-latest.spruce.yml
+  type: s3
+- name: networking-release-compiled-release-patch-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: cloudfoundry/networking-release-latest.patch.yml
+  type: s3
+- name: os-conf-release
+  source:
+    repository: cloudfoundry/os-conf-release
+  type: bosh-io-release
+- name: os-conf-release-compiled-release
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases
+    regexp: cloudfoundry/os-conf-release-([\d\.]+)-ubuntu-trusty-[\d\.]+.tgz
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+  type: s3
+- name: os-conf-release-compiled-release-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: cloudfoundry/os-conf-release-latest.spruce.yml
+  type: s3
+- name: os-conf-release-compiled-release-patch-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: cloudfoundry/os-conf-release-latest.patch.yml
   type: s3
 - name: stannis-boshrelease
   source:
