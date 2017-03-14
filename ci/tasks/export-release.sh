@@ -66,10 +66,10 @@ cd -
 cat > compiled-release/$RELEASE_ORG_NAME-latest.spruce.yml <<YAML
 ---
 releases:
-- name: $RELEASE_NAME
-  version: $RELEASE_VERSION
-  sha1: $RELEASE_SHA1
-  url: $BUCKET_URL/$RELEASE_FILENAME
+- name: "${RELEASE_NAME}"
+  version: "${RELEASE_VERSION}"
+  sha1: "${RELEASE_SHA1}"
+  url: "${BUCKET_URL}/${RELEASE_FILENAME}"
 YAML
 cp compiled-release/$RELEASE_ORG_NAME-{latest,$RELEASE_VERSION}.spruce.yml
 
@@ -77,10 +77,10 @@ cat > compiled-release/$RELEASE_ORG_NAME-latest.patch.yml <<YAML
 - type: replace
   path: /releases/name=$RELEASE_NAME?
   value:
-    name: $RELEASE_NAME
-    version: $RELEASE_VERSION
-    sha1: $RELEASE_SHA1
-    url: $BUCKET_URL/$RELEASE_FILENAME
+    name: "${RELEASE_NAME}"
+    version: "${RELEASE_VERSION}"
+    sha1: "${RELEASE_SHA1}"
+    url: "${BUCKET_URL}/${RELEASE_FILENAME}"
 YAML
 cp compiled-release/$RELEASE_ORG_NAME-{latest,$RELEASE_VERSION}.patch.yml
 
