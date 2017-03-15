@@ -325,6 +325,48 @@ jobs:
         file: compiled-release/cloudfoundry/garden-runc-release*-latest.patch.yml
       put: garden-runc-release-compiled-release-patch-yml
   serial: true
+- name: kubo-release
+  plan:
+  - aggregate:
+    - get: monkeys
+    - get: ubuntu-trusty-stemcell
+      params:
+        tarball: false
+      passed:
+      - upload-stemcell
+      trigger: true
+    - get: kubo-release
+      trigger: true
+  - file: monkeys/ci/tasks/director-creds.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      VAULT_ADDR: {{VAULT_ADDR}}
+      VAULT_PREFIX: {{VAULT_PREFIX}}
+      VAULT_SKIP_VERIFY: 1
+    task: director-creds
+  - file: monkeys/ci/tasks/export-release.yml
+    input_mapping:
+      release: kubo-release
+      stemcell: ubuntu-trusty-stemcell
+    params:
+      BOSH_DEPLOYMENT: kubo-release
+      BUCKET_URL: https://s3.amazonaws.com/million-monkeys-releases
+      RELEASE_ORG_NAME: pivotal-cf-experimental/kubo-release
+    task: export-release
+  - aggregate:
+    - params:
+        acl: public-read
+        file: compiled-release/pivotal-cf-experimental/kubo-release*.tgz
+      put: kubo-release-compiled-release
+    - params:
+        acl: public-read
+        file: compiled-release/pivotal-cf-experimental/kubo-release*-latest.spruce.yml
+      put: kubo-release-compiled-release-yml
+    - params:
+        acl: public-read
+        file: compiled-release/pivotal-cf-experimental/kubo-release*-latest.patch.yml
+      put: kubo-release-compiled-release-patch-yml
+  serial: true
 - name: networking-release
   plan:
   - aggregate:
@@ -683,6 +725,37 @@ resources:
     region_name: us-east-1
     secret_access_key: {{cfcommunity-aws-secret}}
     versioned_file: cloudfoundry/garden-runc-release-latest.patch.yml
+  type: s3
+- name: kubo-release
+  source:
+    access_token: {{GITHUB_TOKEN}}
+    pre_release: true
+    repository: kubo-release
+    user: pivotal-cf-experimental
+  type: github-release
+- name: kubo-release-compiled-release
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases
+    regexp: pivotal-cf-experimental/kubo-release-([\d\.]+)-ubuntu-trusty-[\d\.]+.tgz
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+  type: s3
+- name: kubo-release-compiled-release-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: pivotal-cf-experimental/kubo-release-latest.spruce.yml
+  type: s3
+- name: kubo-release-compiled-release-patch-yml
+  source:
+    access_key_id: {{cfcommunity-aws-access}}
+    bucket: million-monkeys-releases-latest
+    region_name: us-east-1
+    secret_access_key: {{cfcommunity-aws-secret}}
+    versioned_file: pivotal-cf-experimental/kubo-release-latest.patch.yml
   type: s3
 - name: networking-release
   source:

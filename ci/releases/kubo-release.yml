@@ -1,0 +1,13 @@
+---
+release:
+  release_label: kubo-release
+  release_org_name: pivotal-cf-experimental/kubo-release
+
+resources:
+- name: (( grab release.release_label ))
+  type: github-release
+  source:
+    user: pivotal-cf-experimental
+    repository: (( grab release.release_label ))
+    access_token: {{GITHUB_TOKEN}}
+    pre_release: true
