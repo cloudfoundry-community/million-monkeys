@@ -5,13 +5,12 @@ cd $DIR
 
 set -e
 
-spruce --concourse merge pipeline-base.yml creds-noop.yml > pipeline.yml
+echo fetching credentials
+spruce --concourse merge pipeline-base.yml creds.yml > pipeline.yml
 for release in $(ls releases/*.yml); do
   echo merging $release
-  spruce --concourse merge creds-noop.yml release.yml $release > release-next.yml
-  spruce --concourse merge pipeline.yml release-next.yml > pipeline-with-releases-plus1.yml
-  mv pipeline-with-releases-plus1.yml pipeline.yml
-  rm release-next.yml
+  spruce merge pipeline.yml release.yml $release > pipeline-next.yml
+  mv pipeline-next.yml pipeline.yml
 done
 
 for stemcell_short in $(cat stemcells); do
@@ -20,11 +19,11 @@ for stemcell_short in $(cat stemcells); do
 ---
 stemcell_short: $stemcell_short
 YAML
-  spruce --concourse merge --prune stemcell_short creds-noop.yml stemcell.yml stemcell_short.yml > stemcell-next.yml
-  spruce --concourse merge pipeline.yml stemcell-next.yml > pipeline-with-stemcell.yml
-  mv pipeline-with-stemcell.yml pipeline.yml
-  rm stemcell_short.yml stemcell-next.yml
+  spruce merge pipeline.yml stemcell.yml stemcell_short.yml > pipeline-next.yml
+  mv pipeline-next.yml pipeline.yml
+  rm stemcell_short.yml
 done
 
 cd $DIR/..
-fly -t vsphere sp -p $(basename $(pwd)) -c <(spruce merge ci/pipeline.yml ci/creds.yml)
+fly -t vsphere sp -p $(basename $(pwd)) -c ci/pipeline.yml
+rm ci/pipeline.yml

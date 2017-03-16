@@ -18,5 +18,5 @@ blobs/*
 tmp
 my*.yml
 releases/**/*.tgz
-credentials.yml
+ci/pipeline.yml
 .envrc
