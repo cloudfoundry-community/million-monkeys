@@ -39,7 +39,7 @@ releases:
 - name: "$RELEASE_NAME"
   version: "$RELEASE_VERSION"
 stemcells:
-- alias: default
+- alias: large
   os: "$STEMCELL_OS"
   version: "$STEMCELL_VERSION"
 update:
