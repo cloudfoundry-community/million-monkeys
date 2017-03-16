@@ -9,5 +9,5 @@ resources:
   source:
     user: pivotal-cf-experimental
     repository: (( grab release.release_label ))
-    access_token: {{GITHUB_TOKEN}}
+    access_token: (( grab meta.github.token ))
     pre_release: true

@@ -14,9 +14,9 @@ resources:
 - name: ci-image
   type: docker-image
   source:
-    email: {{docker-hub-email}}
-    username: {{docker-hub-username}}
-    password: {{docker-hub-password}}
+    email: (( grab meta.docker_hub.email ))
+    username: (( grab meta.docker_hub.username ))
+    password: (( grab meta.docker_hub.password ))
     repository: cfcommunity/monkeys-ci
 
 jobs:
@@ -30,10 +30,10 @@ jobs:
   - task: director-creds
     file: monkeys/ci/tasks/director-creds.yml
     params:
-      GITHUB_TOKEN: {{GITHUB_TOKEN}}
-      VAULT_ADDR: {{VAULT_ADDR}}
+      GITHUB_TOKEN: (( grab meta.github.token ))
+      VAULT_ADDR: (( grab meta.vault.addr ))
       VAULT_SKIP_VERIFY: 1
-      VAULT_PREFIX: {{VAULT_PREFIX}}
+      VAULT_PREFIX: (( grab meta.vault.prefix ))
   - task: upload-stemcell
     file: monkeys/ci/tasks/upload-stemcell.yml
     input_mapping:

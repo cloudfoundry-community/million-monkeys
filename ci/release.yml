@@ -8,8 +8,8 @@ resources:
   type: s3
   source:
     bucket: million-monkeys-releases
-    access_key_id: {{cfcommunity-aws-access}}
-    secret_access_key: {{cfcommunity-aws-secret}}
+    access_key_id: (( grab meta.cfcommunity.aws_access ))
+    secret_access_key: (( grab meta.cfcommunity.aws_secret ))
     region_name: us-east-1
     # e.g stannis-12.0-ubuntu-trusty-3363.12.tgz
     regexp: (( concat release.release_org_name "-\([\\d\\.]+\)-ubuntu-trusty-[\\d\\.]+.tgz" ))
@@ -18,8 +18,8 @@ resources:
   type: s3
   source:
     bucket: million-monkeys-releases-latest
-    access_key_id: {{cfcommunity-aws-access}}
-    secret_access_key: {{cfcommunity-aws-secret}}
+    access_key_id: (( grab meta.cfcommunity.aws_access ))
+    secret_access_key: (( grab meta.cfcommunity.aws_secret ))
     region_name: us-east-1
     versioned_file: (( concat release.release_org_name "-latest.spruce.yml" ))
 
@@ -27,8 +27,8 @@ resources:
   type: s3
   source:
     bucket: million-monkeys-releases-latest
-    access_key_id: {{cfcommunity-aws-access}}
-    secret_access_key: {{cfcommunity-aws-secret}}
+    access_key_id: (( grab meta.cfcommunity.aws_access ))
+    secret_access_key: (( grab meta.cfcommunity.aws_secret ))
     region_name: us-east-1
     versioned_file: (( concat release.release_org_name "-latest.patch.yml" ))
 
@@ -48,10 +48,10 @@ jobs:
   - task: director-creds
     file: monkeys/ci/tasks/director-creds.yml
     params:
-      GITHUB_TOKEN: {{GITHUB_TOKEN}}
-      VAULT_ADDR: {{VAULT_ADDR}}
+      GITHUB_TOKEN: (( grab meta.github.token ))
+      VAULT_ADDR: (( grab meta.vault.addr ))
       VAULT_SKIP_VERIFY: 1
-      VAULT_PREFIX: {{VAULT_PREFIX}}
+      VAULT_PREFIX: (( grab meta.vault.prefix ))
   - task: export-release
     file: monkeys/ci/tasks/export-release.yml
     input_mapping:

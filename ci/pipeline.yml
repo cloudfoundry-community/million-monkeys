@@ -6,9 +6,9 @@ jobs:
     - get: ubuntu-trusty-stemcell
   - file: monkeys/ci/tasks/director-creds.yml
     params:
-      GITHUB_TOKEN: {{GITHUB_TOKEN}}
-      VAULT_ADDR: {{VAULT_ADDR}}
-      VAULT_PREFIX: {{VAULT_PREFIX}}
+      GITHUB_TOKEN: vault "secret/million-monkeys" "/github:token"
+      VAULT_ADDR: https://10.58.111.42:8200
+      VAULT_PREFIX: secret/microbosh/vsphere/cloud-config
       VAULT_SKIP_VERIFY: 1
     task: director-creds
   - file: monkeys/ci/tasks/upload-stemcell.yml
@@ -87,9 +87,9 @@ jobs:
       trigger: true
   - file: monkeys/ci/tasks/director-creds.yml
     params:
-      GITHUB_TOKEN: {{GITHUB_TOKEN}}
-      VAULT_ADDR: {{VAULT_ADDR}}
-      VAULT_PREFIX: {{VAULT_PREFIX}}
+      GITHUB_TOKEN: vault "secret/million-monkeys" "/github:token"
+      VAULT_ADDR: https://10.58.111.42:8200
+      VAULT_PREFIX: secret/microbosh/vsphere/cloud-config
       VAULT_SKIP_VERIFY: 1
     task: director-creds
   - file: monkeys/ci/tasks/export-release.yml
@@ -129,9 +129,9 @@ jobs:
       trigger: true
   - file: monkeys/ci/tasks/director-creds.yml
     params:
-      GITHUB_TOKEN: {{GITHUB_TOKEN}}
-      VAULT_ADDR: {{VAULT_ADDR}}
-      VAULT_PREFIX: {{VAULT_PREFIX}}
+      GITHUB_TOKEN: vault "secret/million-monkeys" "/github:token"
+      VAULT_ADDR: https://10.58.111.42:8200
+      VAULT_PREFIX: secret/microbosh/vsphere/cloud-config
       VAULT_SKIP_VERIFY: 1
     task: director-creds
   - file: monkeys/ci/tasks/export-release.yml
@@ -171,9 +171,9 @@ jobs:
       trigger: true
   - file: monkeys/ci/tasks/director-creds.yml
     params:
-      GITHUB_TOKEN: {{GITHUB_TOKEN}}
-      VAULT_ADDR: {{VAULT_ADDR}}
-      VAULT_PREFIX: {{VAULT_PREFIX}}
+      GITHUB_TOKEN: vault "secret/million-monkeys" "/github:token"
+      VAULT_ADDR: https://10.58.111.42:8200
+      VAULT_PREFIX: secret/microbosh/vsphere/cloud-config
       VAULT_SKIP_VERIFY: 1
     task: director-creds
   - file: monkeys/ci/tasks/export-release.yml
@@ -213,9 +213,9 @@ jobs:
       trigger: true
   - file: monkeys/ci/tasks/director-creds.yml
     params:
-      GITHUB_TOKEN: {{GITHUB_TOKEN}}
-      VAULT_ADDR: {{VAULT_ADDR}}
-      VAULT_PREFIX: {{VAULT_PREFIX}}
+      GITHUB_TOKEN: vault "secret/million-monkeys" "/github:token"
+      VAULT_ADDR: https://10.58.111.42:8200
+      VAULT_PREFIX: secret/microbosh/vsphere/cloud-config
       VAULT_SKIP_VERIFY: 1
     task: director-creds
   - file: monkeys/ci/tasks/export-release.yml
@@ -255,9 +255,9 @@ jobs:
       trigger: true
   - file: monkeys/ci/tasks/director-creds.yml
     params:
-      GITHUB_TOKEN: {{GITHUB_TOKEN}}
-      VAULT_ADDR: {{VAULT_ADDR}}
-      VAULT_PREFIX: {{VAULT_PREFIX}}
+      GITHUB_TOKEN: vault "secret/million-monkeys" "/github:token"
+      VAULT_ADDR: https://10.58.111.42:8200
+      VAULT_PREFIX: secret/microbosh/vsphere/cloud-config
       VAULT_SKIP_VERIFY: 1
     task: director-creds
   - file: monkeys/ci/tasks/export-release.yml
@@ -297,9 +297,9 @@ jobs:
       trigger: true
   - file: monkeys/ci/tasks/director-creds.yml
     params:
-      GITHUB_TOKEN: {{GITHUB_TOKEN}}
-      VAULT_ADDR: {{VAULT_ADDR}}
-      VAULT_PREFIX: {{VAULT_PREFIX}}
+      GITHUB_TOKEN: vault "secret/million-monkeys" "/github:token"
+      VAULT_ADDR: https://10.58.111.42:8200
+      VAULT_PREFIX: secret/microbosh/vsphere/cloud-config
       VAULT_SKIP_VERIFY: 1
     task: director-creds
   - file: monkeys/ci/tasks/export-release.yml
@@ -339,9 +339,9 @@ jobs:
       trigger: true
   - file: monkeys/ci/tasks/director-creds.yml
     params:
-      GITHUB_TOKEN: {{GITHUB_TOKEN}}
-      VAULT_ADDR: {{VAULT_ADDR}}
-      VAULT_PREFIX: {{VAULT_PREFIX}}
+      GITHUB_TOKEN: vault "secret/million-monkeys" "/github:token"
+      VAULT_ADDR: https://10.58.111.42:8200
+      VAULT_PREFIX: secret/microbosh/vsphere/cloud-config
       VAULT_SKIP_VERIFY: 1
     task: director-creds
   - file: monkeys/ci/tasks/export-release.yml
@@ -381,9 +381,9 @@ jobs:
       trigger: true
   - file: monkeys/ci/tasks/director-creds.yml
     params:
-      GITHUB_TOKEN: {{GITHUB_TOKEN}}
-      VAULT_ADDR: {{VAULT_ADDR}}
-      VAULT_PREFIX: {{VAULT_PREFIX}}
+      GITHUB_TOKEN: vault "secret/million-monkeys" "/github:token"
+      VAULT_ADDR: https://10.58.111.42:8200
+      VAULT_PREFIX: secret/microbosh/vsphere/cloud-config
       VAULT_SKIP_VERIFY: 1
     task: director-creds
   - file: monkeys/ci/tasks/export-release.yml
@@ -423,9 +423,9 @@ jobs:
       trigger: true
   - file: monkeys/ci/tasks/director-creds.yml
     params:
-      GITHUB_TOKEN: {{GITHUB_TOKEN}}
-      VAULT_ADDR: {{VAULT_ADDR}}
-      VAULT_PREFIX: {{VAULT_PREFIX}}
+      GITHUB_TOKEN: vault "secret/million-monkeys" "/github:token"
+      VAULT_ADDR: https://10.58.111.42:8200
+      VAULT_PREFIX: secret/microbosh/vsphere/cloud-config
       VAULT_SKIP_VERIFY: 1
     task: director-creds
   - file: monkeys/ci/tasks/export-release.yml
@@ -465,9 +465,9 @@ jobs:
       trigger: true
   - file: monkeys/ci/tasks/director-creds.yml
     params:
-      GITHUB_TOKEN: {{GITHUB_TOKEN}}
-      VAULT_ADDR: {{VAULT_ADDR}}
-      VAULT_PREFIX: {{VAULT_PREFIX}}
+      GITHUB_TOKEN: vault "secret/million-monkeys" "/github:token"
+      VAULT_ADDR: https://10.58.111.42:8200
+      VAULT_PREFIX: secret/microbosh/vsphere/cloud-config
       VAULT_SKIP_VERIFY: 1
     task: director-creds
   - file: monkeys/ci/tasks/export-release.yml
@@ -507,9 +507,9 @@ jobs:
       trigger: true
   - file: monkeys/ci/tasks/director-creds.yml
     params:
-      GITHUB_TOKEN: {{GITHUB_TOKEN}}
-      VAULT_ADDR: {{VAULT_ADDR}}
-      VAULT_PREFIX: {{VAULT_PREFIX}}
+      GITHUB_TOKEN: vault "secret/million-monkeys" "/github:token"
+      VAULT_ADDR: https://10.58.111.42:8200
+      VAULT_PREFIX: secret/microbosh/vsphere/cloud-config
       VAULT_SKIP_VERIFY: 1
     task: director-creds
   - file: monkeys/ci/tasks/export-release.yml
@@ -535,6 +535,20 @@ jobs:
         file: compiled-release/cloudfoundry/uaa-release*-latest.patch.yml
       put: uaa-release-compiled-release-patch-yml
   serial: true
+meta:
+  cfcommunity:
+    aws_access: vault "secret/million-monkeys" "/aws/cfcommunity:access"
+    aws_secret: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
+  docker_hub:
+    email: vault "secret/million-monkeys" "/docker_hub:email"
+    password: vault "secret/million-monkeys" "/docker_hub:password"
+    username: vault "secret/million-monkeys" "/docker_hub:username"
+  github:
+    private_key: vault "secret/million-monkeys" "/github:private_key"
+    token: vault "secret/million-monkeys" "/github:token"
+  vault:
+    addr: https://10.58.111.42:8200
+    prefix: secret/microbosh/vsphere/cloud-config
 release:
   release_label: uaa-release
   release_org_name: cloudfoundry/uaa-release
@@ -550,10 +564,10 @@ resources:
   type: bosh-io-stemcell
 - name: ci-image
   source:
-    email: {{docker-hub-email}}
-    password: {{docker-hub-password}}
+    email: vault "secret/million-monkeys" "/docker_hub:email"
+    password: vault "secret/million-monkeys" "/docker_hub:password"
     repository: cfcommunity/monkeys-ci
-    username: {{docker-hub-username}}
+    username: vault "secret/million-monkeys" "/docker_hub:username"
   type: docker-image
 - name: bosh-warden-cpi-release
   source:
@@ -561,26 +575,26 @@ resources:
   type: bosh-io-release
 - name: bosh-warden-cpi-release-compiled-release
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases
     regexp: cppforlife/bosh-warden-cpi-release-([\d\.]+)-ubuntu-trusty-[\d\.]+.tgz
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
   type: s3
 - name: bosh-warden-cpi-release-compiled-release-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: cppforlife/bosh-warden-cpi-release-latest.spruce.yml
   type: s3
 - name: bosh-warden-cpi-release-compiled-release-patch-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: cppforlife/bosh-warden-cpi-release-latest.patch.yml
   type: s3
 - name: bosh-release
@@ -589,26 +603,26 @@ resources:
   type: bosh-io-release
 - name: bosh-release-compiled-release
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases
     regexp: cloudfoundry/bosh-([\d\.]+)-ubuntu-trusty-[\d\.]+.tgz
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
   type: s3
 - name: bosh-release-compiled-release-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: cloudfoundry/bosh-latest.spruce.yml
   type: s3
 - name: bosh-release-compiled-release-patch-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: cloudfoundry/bosh-latest.patch.yml
   type: s3
 - name: cf-release
@@ -617,57 +631,57 @@ resources:
   type: bosh-io-release
 - name: cf-release-compiled-release
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases
     regexp: cloudfoundry/cf-release-([\d\.]+)-ubuntu-trusty-[\d\.]+.tgz
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
   type: s3
 - name: cf-release-compiled-release-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: cloudfoundry/cf-release-latest.spruce.yml
   type: s3
 - name: cf-release-compiled-release-patch-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: cloudfoundry/cf-release-latest.patch.yml
   type: s3
 - name: credhub-release
   source:
-    access_token: {{GITHUB_TOKEN}}
+    access_token: vault "secret/million-monkeys" "/github:token"
     pre_release: true
     repository: credhub-release
     user: pivotal-cf
   type: github-release
 - name: credhub-release-compiled-release
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases
     regexp: pivotal-cf/credhub-release-([\d\.]+)-ubuntu-trusty-[\d\.]+.tgz
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
   type: s3
 - name: credhub-release-compiled-release-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: pivotal-cf/credhub-release-latest.spruce.yml
   type: s3
 - name: credhub-release-compiled-release-patch-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: pivotal-cf/credhub-release-latest.patch.yml
   type: s3
 - name: dingo-postgresql-release
@@ -676,26 +690,26 @@ resources:
   type: bosh-io-release
 - name: dingo-postgresql-release-compiled-release
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases
     regexp: dingotiles/dingo-postgresql-release-([\d\.]+)-ubuntu-trusty-[\d\.]+.tgz
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
   type: s3
 - name: dingo-postgresql-release-compiled-release-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: dingotiles/dingo-postgresql-release-latest.spruce.yml
   type: s3
 - name: dingo-postgresql-release-compiled-release-patch-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: dingotiles/dingo-postgresql-release-latest.patch.yml
   type: s3
 - name: garden-runc-release
@@ -704,57 +718,57 @@ resources:
   type: bosh-io-release
 - name: garden-runc-release-compiled-release
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases
     regexp: cloudfoundry/garden-runc-release-([\d\.]+)-ubuntu-trusty-[\d\.]+.tgz
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
   type: s3
 - name: garden-runc-release-compiled-release-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: cloudfoundry/garden-runc-release-latest.spruce.yml
   type: s3
 - name: garden-runc-release-compiled-release-patch-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: cloudfoundry/garden-runc-release-latest.patch.yml
   type: s3
 - name: kubo-release
   source:
-    access_token: {{GITHUB_TOKEN}}
+    access_token: vault "secret/million-monkeys" "/github:token"
     pre_release: true
     repository: kubo-release
     user: pivotal-cf-experimental
   type: github-release
 - name: kubo-release-compiled-release
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases
     regexp: pivotal-cf-experimental/kubo-release-([\d\.]+)-ubuntu-trusty-[\d\.]+.tgz
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
   type: s3
 - name: kubo-release-compiled-release-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: pivotal-cf-experimental/kubo-release-latest.spruce.yml
   type: s3
 - name: kubo-release-compiled-release-patch-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: pivotal-cf-experimental/kubo-release-latest.patch.yml
   type: s3
 - name: networking-release
@@ -763,26 +777,26 @@ resources:
   type: bosh-io-release
 - name: networking-release-compiled-release
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases
     regexp: cloudfoundry/networking-release-([\d\.]+)-ubuntu-trusty-[\d\.]+.tgz
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
   type: s3
 - name: networking-release-compiled-release-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: cloudfoundry/networking-release-latest.spruce.yml
   type: s3
 - name: networking-release-compiled-release-patch-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: cloudfoundry/networking-release-latest.patch.yml
   type: s3
 - name: os-conf-release
@@ -791,26 +805,26 @@ resources:
   type: bosh-io-release
 - name: os-conf-release-compiled-release
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases
     regexp: cloudfoundry/os-conf-release-([\d\.]+)-ubuntu-trusty-[\d\.]+.tgz
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
   type: s3
 - name: os-conf-release-compiled-release-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: cloudfoundry/os-conf-release-latest.spruce.yml
   type: s3
 - name: os-conf-release-compiled-release-patch-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: cloudfoundry/os-conf-release-latest.patch.yml
   type: s3
 - name: stannis-boshrelease
@@ -819,26 +833,26 @@ resources:
   type: bosh-io-release
 - name: stannis-boshrelease-compiled-release
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases
     regexp: cloudfoundry-community/stannis-boshrelease-([\d\.]+)-ubuntu-trusty-[\d\.]+.tgz
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
   type: s3
 - name: stannis-boshrelease-compiled-release-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: cloudfoundry-community/stannis-boshrelease-latest.spruce.yml
   type: s3
 - name: stannis-boshrelease-compiled-release-patch-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: cloudfoundry-community/stannis-boshrelease-latest.patch.yml
   type: s3
 - name: uaa-release
@@ -847,122 +861,122 @@ resources:
   type: bosh-io-release
 - name: uaa-release-compiled-release
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases
     regexp: cloudfoundry/uaa-release-([\d\.]+)-ubuntu-trusty-[\d\.]+.tgz
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
   type: s3
 - name: uaa-release-compiled-release-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: cloudfoundry/uaa-release-latest.spruce.yml
   type: s3
 - name: uaa-release-compiled-release-patch-yml
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: cloudfoundry/uaa-release-latest.patch.yml
   type: s3
 - name: compiled-stemcell-vsphere-esxi-spruce
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: stemcell-vsphere-esxi.spruce.yml
   type: s3
 - name: compiled-stemcell-vsphere-esxi-patch
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: stemcell-vsphere-esxi.patch.yml
   type: s3
 - name: compiled-stemcell-warden-boshlite-spruce
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: stemcell-warden-boshlite.spruce.yml
   type: s3
 - name: compiled-stemcell-warden-boshlite-patch
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: stemcell-warden-boshlite.patch.yml
   type: s3
 - name: compiled-stemcell-aws-xen-hvm-spruce
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: stemcell-aws-xen-hvm.spruce.yml
   type: s3
 - name: compiled-stemcell-aws-xen-hvm-patch
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: stemcell-aws-xen-hvm.patch.yml
   type: s3
 - name: compiled-stemcell-azure-hyperv-spruce
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: stemcell-azure-hyperv.spruce.yml
   type: s3
 - name: compiled-stemcell-azure-hyperv-patch
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: stemcell-azure-hyperv.patch.yml
   type: s3
 - name: compiled-stemcell-google-kvm-spruce
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: stemcell-google-kvm.spruce.yml
   type: s3
 - name: compiled-stemcell-google-kvm-patch
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: stemcell-google-kvm.patch.yml
   type: s3
 - name: compiled-stemcell-openstack-kvm-spruce
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: stemcell-openstack-kvm.spruce.yml
   type: s3
 - name: compiled-stemcell-openstack-kvm-patch
   source:
-    access_key_id: {{cfcommunity-aws-access}}
+    access_key_id: vault "secret/million-monkeys" "/aws/cfcommunity:access"
     bucket: million-monkeys-releases-latest
     region_name: us-east-1
-    secret_access_key: {{cfcommunity-aws-secret}}
+    secret_access_key: vault "secret/million-monkeys" "/aws/cfcommunity:secret"
     versioned_file: stemcell-openstack-kvm.patch.yml
   type: s3
 uploads:

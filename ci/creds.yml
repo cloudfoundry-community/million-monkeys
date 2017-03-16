@@ -1,0 +1,17 @@
+meta:
+  vault:
+    addr: https://10.58.111.42:8200
+    prefix: secret/microbosh/vsphere/cloud-config
+
+  github:
+    token: (( vault "secret/million-monkeys" "/github:token" ))
+    private_key: (( vault "secret/million-monkeys" "/github:private_key" ))
+
+  docker_hub:
+    email: (( vault "secret/million-monkeys" "/docker_hub:email" ))
+    username: (( vault "secret/million-monkeys" "/docker_hub:username" ))
+    password: (( vault "secret/million-monkeys" "/docker_hub:password" ))
+
+  cfcommunity:
+    aws_access: (( vault "secret/million-monkeys" "/aws/cfcommunity:access" ))
+    aws_secret: (( vault "secret/million-monkeys" "/aws/cfcommunity:secret" ))
