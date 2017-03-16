@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+release=$1
+format=${2:-spruce}
+
+if [[ "${release:-X}" == "X" ]]; then
+  echo "USAGE: ./bin/monkeys [release] [spruce|patch]"
+  echo "  where 'release' can be any of:"
+  for release in $(ls ci/releases/*.yml |sort); do
+    base=$(basename $release | sed -e "s/.yml//")
+    echo "  * $base"
+  done
+  exit 1
+fi
+
+release=ci/releases/$release.yml
+release_org_name=$(cat $release | spruce json | jq -r .release.release_org_name)
+
+set -x
+curl -s https://s3.amazonaws.com/million-monkeys-releases-latest/${release_org_name}-latest.$format.yml

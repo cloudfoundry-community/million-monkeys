@@ -12,6 +12,45 @@ Whenever a new stemcell is published, all community BOSH releases are deployed; 
 
 ## Usage
 
+Get YAML snippets that you can merge into your deployment manifests:
+
+```
+$ ./bin/monkeys bosh
+---
+releases:
+- name: bosh
+  version: 261.4
+  sha1: a4c648d0fcc6c818cb35ba7aead6a4d9ddb32826
+  url: https://s3.amazonaws.com/million-monkeys-releases/cloudfoundry/bosh-261.4-ubuntu-trusty-3363.12.tgz
+```
+
+To get a `bosh-cli int -o` operator patch file format:
+
+```
+$ ./bin/monkeys bosh patch
+- type: replace
+  path: /releases/name=bosh?
+  value:
+    name: bosh
+    version: 261.4
+    sha1: a4c648d0fcc6c818cb35ba7aead6a4d9ddb32826
+    url: https://s3.amazonaws.com/million-monkeys-releases/cloudfoundry/bosh-261.4-ubuntu-trusty-3363.12.tgz
+```
+
+To see the list of available pre-compiled releases:
+
+```
+$ ./bin/monkeys
+USAGE: ./bin/monkeys [release] [spruce|patch]
+  where 'release' can be any of:
+  * bosh-warden-cpi-release
+  * bosh
+  * cf-release
+  * credhub-release
+  ...
+```
+
+
 A sample use case for `bosh-cli create-env` or `bosh-cli int`:
 
 ```
@@ -93,7 +132,7 @@ resources:
   source:
     user: pivotal-cf
     repository: (( grab release.release_label ))
-    access_token: {{GITHUB_TOKEN}}
+    access_token: (( grab meta.github.token ))
     pre_release: true
 ```
 
