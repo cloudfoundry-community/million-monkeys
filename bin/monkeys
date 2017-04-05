@@ -3,18 +3,19 @@
 set -e
 release=$1
 format=${2:-spruce}
+repo_root=$(dirname $(readlink "$0") | rev | cut -c5- | rev)
 
 if [[ "${release:-X}" == "X" ]]; then
-  echo "USAGE: ./bin/monkeys [release] [spruce|patch]"
+  echo "USAGE: monkeys [release] [spruce|patch]"
   echo "  where 'release' can be any of:"
-  for release in $(ls ci/releases/*.yml |sort); do
+  for release in $(ls ${repo_root}/ci/releases/*.yml |sort); do
     base=$(basename $release | sed -e "s/.yml//")
     echo "  * $base"
   done
   exit 1
 fi
 
-release=ci/releases/$release.yml
+release=${repo_root}/ci/releases/$release.yml
 release_org_name=$(cat $release | spruce json | jq -r .release.release_org_name)
 
 set -x
